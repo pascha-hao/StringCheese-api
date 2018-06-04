@@ -1,6 +1,7 @@
 import { ApplicationConfig } from '@loopback/core';
 import { RestApplication } from '@loopback/rest';
 import { Booter, Binding } from '@loopback/boot';
+import { Class, Repository, juggler } from '@loopback/repository';
 declare const GoldenThreadApiApplication_base: (new (...args: any[]) => {
     [x: string]: any;
     projectRoot: string;
@@ -23,6 +24,13 @@ declare const GoldenThreadApiApplication_base: (new (...args: any[]) => {
     booters(...booterCls: (new (...args: any[]) => Booter)[]): Binding<any>[];
     component(component: new (...args: any[]) => {}): void;
     mountComponentBooters(component: new (...args: any[]) => {}): void;
+}) & (new (...args: any[]) => {
+    [x: string]: any;
+    repository(repo: Class<Repository<any>>): void;
+    getRepository<R extends Repository<any>>(repo: Class<R>): Promise<R>;
+    dataSource(dataSource: juggler.DataSource, name?: string | undefined): void;
+    component(component: Class<{}>): void;
+    mountComponentRepository(component: Class<{}>): void;
 }) & typeof RestApplication;
 export declare class GoldenThreadApiApplication extends GoldenThreadApiApplication_base {
     constructor(options?: ApplicationConfig);

@@ -6,7 +6,8 @@ const sequence_1 = require("./sequence");
 // Binding and Booter imports are required to infer types for BootMixin!
 const boot_1 = require("@loopback/boot");
 /* tslint:enable:no-unused-variable */
-class GoldenThreadApiApplication extends boot_1.BootMixin(rest_1.RestApplication) {
+const repository_1 = require("@loopback/repository");
+class GoldenThreadApiApplication extends boot_1.BootMixin(repository_1.RepositoryMixin(rest_1.RestApplication)) {
     constructor(options) {
         super(options);
         // Set up the custom sequence
@@ -21,6 +22,11 @@ class GoldenThreadApiApplication extends boot_1.BootMixin(rest_1.RestApplication
                 nested: true,
             },
         };
+        var dataSourceConfig = new repository_1.juggler.DataSource({
+            name: "db",
+            connector: "memory"
+        });
+        this.dataSource(dataSourceConfig);
     }
     async start() {
         await super.start();

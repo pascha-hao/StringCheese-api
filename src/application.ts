@@ -7,7 +7,15 @@ import {MySequence} from './sequence';
 import {BootMixin, Booter, Binding} from '@loopback/boot';
 /* tslint:enable:no-unused-variable */
 
-export class GoldenThreadApiApplication extends BootMixin(RestApplication) {
+import {
+  Class,
+  Repository,
+  RepositoryMixin,
+  juggler
+} from '@loopback/repository';
+
+
+export class GoldenThreadApiApplication extends BootMixin(RepositoryMixin(RestApplication)) {
   constructor(options?: ApplicationConfig) {
     super(options);
 
@@ -24,6 +32,14 @@ export class GoldenThreadApiApplication extends BootMixin(RestApplication) {
         nested: true,
       },
     };
+
+    var dataSourceConfig = new juggler.DataSource({
+      name: "db",
+      connector: "memory"
+    });
+    
+    this.dataSource(dataSourceConfig);
+
   }
 
   async start() {
