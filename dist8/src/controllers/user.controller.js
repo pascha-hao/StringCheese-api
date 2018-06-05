@@ -30,6 +30,9 @@ let UserController = class UserController {
         return await this.userRepo.find();
     }
     async login(login) {
+        if (!login.email || !login.password) {
+            throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
+        }
         var users = await this.userRepo.find();
         var email = login.email;
         var password = login.password;
@@ -38,9 +41,17 @@ let UserController = class UserController {
                 break;
             }
             if (i == users.length - 1) {
-                throw new Error("Invalid email or password!");
+                throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
             }
         }
+    }
+    async findUsersById(id) {
+        // Check for valid ID
+        let userExists = !!(await this.userRepo.count({ id }));
+        if (!userExists) {
+            throw new rest_1.HttpErrors.BadRequest(`user ID ${id} does not exist`);
+        }
+        return await this.userRepo.findById(id);
     }
 };
 __decorate([
@@ -63,6 +74,13 @@ __decorate([
     __metadata("design:paramtypes", [login_1.Login]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "login", null);
+__decorate([
+    rest_1.get('/users/{id}'),
+    __param(0, rest_1.param.path.number('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "findUsersById", null);
 UserController = __decorate([
     __param(0, repository_1.repository(user_repository_1.UserRepository.name)),
     __metadata("design:paramtypes", [user_repository_1.UserRepository])

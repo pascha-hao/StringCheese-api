@@ -7,4 +7,5 @@ export declare class UserController {
     createUser(user: User): Promise<User>;
     getAllUsers(): Promise<Array<User>>;
     login(login: Login): Promise<void>;
+    findUsersById(id: number): Promise<User>;
 }

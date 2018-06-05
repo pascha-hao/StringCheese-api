@@ -5,7 +5,7 @@
 
 import { repository } from "@loopback/repository";
 import { UserRepository } from "../repositories/user.repository";
-import { post, get, requestBody } from "@loopback/rest";
+import { post, get, requestBody, HttpErrors, param } from "@loopback/rest";
 import { User } from "../models/user";
 import { Login } from "../models/login";
 
@@ -27,6 +27,9 @@ export class UserController {
 
   @post('/login')
   async login(@requestBody() login: Login) {
+    if (!login.email || !login.password) {
+      throw new HttpErrors.Unauthorized('invalid credentials');
+    }
     var users = await this.userRepo.find();
     var email = login.email;
     var password = login.password;
@@ -36,9 +39,21 @@ export class UserController {
       }
 
       if(i == users.length - 1){
-        throw new Error("Invalid email or password!");
+        throw new HttpErrors.Unauthorized('invalid credentials');
       }
     }
+  }
+
+  @get('/users/{id}')
+  async findUsersById(@param.path.number('id') id: number): Promise<User> {
+    // Check for valid ID
+    let userExists: boolean = !!(await this.userRepo.count({ id }));
+
+    if (!userExists) {
+      throw new HttpErrors.BadRequest(`user ID ${id} does not exist`);
+    }
+
+    return await this.userRepo.findById(id);
   }
 
 }
