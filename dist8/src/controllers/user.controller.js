@@ -23,27 +23,35 @@ let UserController = class UserController {
     constructor(userRepo) {
         this.userRepo = userRepo;
     }
-    async createUser(user) {
+    async register(user) {
         return await this.userRepo.create(user);
     }
     async getAllUsers() {
         return await this.userRepo.find();
     }
     async login(login) {
+        // Check that email and password are both supplied
         if (!login.email || !login.password) {
             throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
         }
-        var users = await this.userRepo.find();
-        var email = login.email;
-        var password = login.password;
-        for (var i = 0; i < users.length; i++) {
-            if (users[i].email == email && users[i].password == password) {
-                break;
-            }
-            if (i == users.length - 1) {
-                throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
-            }
+        // Check that email and password are valid
+        let userExists = !!(await this.userRepo.count({
+            and: [
+                { email: login.email },
+                { password: login.password },
+            ],
+        }));
+        if (!userExists) {
+            throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
         }
+        return await this.userRepo.findOne({
+            where: {
+                and: [
+                    { email: login.email },
+                    { password: login.password }
+                ],
+            },
+        });
     }
     async findUsersById(id) {
         // Check for valid ID
@@ -60,7 +68,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_1.User]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "createUser", null);
+], UserController.prototype, "register", null);
 __decorate([
     rest_1.get('/users'),
     __metadata("design:type", Function),

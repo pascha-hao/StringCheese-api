@@ -33,6 +33,24 @@ export class User extends Entity {
   })
   password: string;
 
+  @property({
+    type: 'string',
+    required: true
+  })
+  ccnum: string;
+
+  @property({
+    type: 'string',
+    required: true
+  })
+  exp: string;
+
+  @property({
+    type: 'string',
+    required: true
+  })
+  cvc: string;
+
   getId() {
     return this.id;
   }

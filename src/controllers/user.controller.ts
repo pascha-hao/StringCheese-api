@@ -8,6 +8,7 @@ import { UserRepository } from "../repositories/user.repository";
 import { post, get, requestBody, HttpErrors, param } from "@loopback/rest";
 import { User } from "../models/user";
 import { Login } from "../models/login";
+import { Payment } from "../models/payment";
 
 export class UserController {
 
@@ -16,7 +17,7 @@ export class UserController {
   ) {}
 
   @post('/users')
-  async createUser(@requestBody() user: User) {
+  async register(@requestBody() user: User) {
     return await this.userRepo.create(user);
   }
 
@@ -27,21 +28,31 @@ export class UserController {
 
   @post('/login')
   async login(@requestBody() login: Login) {
+    // Check that email and password are both supplied
     if (!login.email || !login.password) {
       throw new HttpErrors.Unauthorized('invalid credentials');
     }
-    var users = await this.userRepo.find();
-    var email = login.email;
-    var password = login.password;
-    for(var i = 0; i < users.length; i++) {
-      if(users[i].email == email && users[i].password == password){
-        break;
-      }
 
-      if(i == users.length - 1){
-        throw new HttpErrors.Unauthorized('invalid credentials');
-      }
+    // Check that email and password are valid
+    let userExists: boolean = !!(await this.userRepo.count({
+      and: [
+        { email: login.email },
+        { password: login.password },
+      ],
+    }));
+
+    if (!userExists) {
+      throw new HttpErrors.Unauthorized('invalid credentials');
     }
+
+    return await this.userRepo.findOne({
+      where: {
+        and: [
+          { email: login.email },
+          { password: login.password }
+        ],
+      },
+    });
   }
 
   @get('/users/{id}')
@@ -54,6 +65,23 @@ export class UserController {
     }
 
     return await this.userRepo.findById(id);
+  }
+
+  @post('/payment-methods')
+  async payment(@requestBody() pay: Payment) {
+    // Check that credit card info is supplied
+    if (!pay.ccnum || !pay.exp || !pay.cvc || !pay.userID) {
+      throw new HttpErrors.Unauthorized('invalid credentials');
+    }
+    else{
+      var user = new User();
+      //user = this.userRepo.findById(pay.userID);
+      user.ccnum = "pay.ccnum";
+      user.exp = "pay.exp";
+      user.exp = "pay.cvc";
+      this.userRepo.update(user);
+    }
+
   }
 
 }
