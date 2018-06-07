@@ -10,69 +10,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let User = class User extends repository_1.Entity {
-    getId() {
-        return this.id;
-    }
+let Payment = class Payment extends repository_1.Entity {
 };
 __decorate([
     repository_1.property({
+        type: 'string',
+        required: true
+    }),
+    __metadata("design:type", String)
+], Payment.prototype, "ccnum", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+        required: true
+    }),
+    __metadata("design:type", String)
+], Payment.prototype, "exp", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+        required: true
+    }),
+    __metadata("design:type", String)
+], Payment.prototype, "cvc", void 0);
+__decorate([
+    repository_1.property({
         type: 'number',
-        id: true
+        required: true
     }),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], User.prototype, "firstname", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], User.prototype, "lastname", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], User.prototype, "ccnum", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], User.prototype, "exp", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], User.prototype, "cvc", void 0);
-User = __decorate([
+], Payment.prototype, "userID", void 0);
+Payment = __decorate([
     repository_1.model()
-], User);
-exports.User = User;
-//# sourceMappingURL=user.js.map
+], Payment);
+exports.Payment = Payment;
+//# sourceMappingURL=payment.js.map

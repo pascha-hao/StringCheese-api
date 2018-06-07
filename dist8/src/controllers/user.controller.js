@@ -19,6 +19,7 @@ const user_repository_1 = require("../repositories/user.repository");
 const rest_1 = require("@loopback/rest");
 const user_1 = require("../models/user");
 const login_1 = require("../models/login");
+const payment_1 = require("../models/payment");
 let UserController = class UserController {
     constructor(userRepo) {
         this.userRepo = userRepo;
@@ -61,6 +62,24 @@ let UserController = class UserController {
         }
         return await this.userRepo.findById(id);
     }
+    async getDonationsByUserId(userId, dateFrom, authorization) {
+        console.log(userId);
+        console.log(dateFrom);
+    }
+    async payment(pay) {
+        // Check that credit card info is supplied
+        if (!pay.ccnum || !pay.exp || !pay.cvc || !pay.userID) {
+            throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
+        }
+        else {
+            var user = new user_1.User();
+            //user = this.userRepo.findById(pay.userID);
+            user.ccnum = "pay.ccnum";
+            user.exp = "pay.exp";
+            user.exp = "pay.cvc";
+            this.userRepo.update(user);
+        }
+    }
 };
 __decorate([
     rest_1.post('/users'),
@@ -89,6 +108,22 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "findUsersById", null);
+__decorate([
+    rest_1.get('/users/{user_id}/donations'),
+    __param(0, rest_1.param.path.number('user_id')),
+    __param(1, rest_1.param.query.date('date_from')),
+    __param(2, rest_1.param.header.string('authorization')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Date, String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getDonationsByUserId", null);
+__decorate([
+    rest_1.post('/payment-methods'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [payment_1.Payment]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "payment", null);
 UserController = __decorate([
     __param(0, repository_1.repository(user_repository_1.UserRepository.name)),
     __metadata("design:paramtypes", [user_repository_1.UserRepository])

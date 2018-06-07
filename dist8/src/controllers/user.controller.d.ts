@@ -1,6 +1,7 @@
 import { UserRepository } from "../repositories/user.repository";
 import { User } from "../models/user";
 import { Login } from "../models/login";
+import { Payment } from "../models/payment";
 export declare class UserController {
     private userRepo;
     constructor(userRepo: UserRepository);
@@ -8,4 +9,6 @@ export declare class UserController {
     getAllUsers(): Promise<Array<User>>;
     login(login: Login): Promise<User>;
     findUsersById(id: number): Promise<User>;
+    getDonationsByUserId(userId: number, dateFrom: Date, authorization: string): Promise<void>;
+    payment(pay: Payment): Promise<void>;
 }
