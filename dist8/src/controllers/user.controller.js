@@ -20,6 +20,7 @@ const rest_1 = require("@loopback/rest");
 const user_1 = require("../models/user");
 const login_1 = require("../models/login");
 const payment_1 = require("../models/payment");
+const jsonwebtoken_1 = require("jsonwebtoken");
 let UserController = class UserController {
     constructor(userRepo) {
         this.userRepo = userRepo;
@@ -45,6 +46,12 @@ let UserController = class UserController {
         if (!userExists) {
             throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
         }
+        jsonwebtoken_1.sign({
+            user: user_1.User
+        }, 'shh', {
+            issuer: 'auth.ix.co.za',
+            audience: 'ix.co.za'
+        });
         return await this.userRepo.findOne({
             where: {
                 and: [
@@ -65,6 +72,23 @@ let UserController = class UserController {
     async getDonationsByUserId(userId, dateFrom, authorization) {
         console.log(userId);
         console.log(dateFrom);
+    }
+    async user(user) {
+        // Check that email and password are both supplied
+        if (!user.email || !user.password || !user.firstname || !user.lastname) {
+            throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
+        }
+        // Check that email and password are valid
+        let userExists = !!(await this.userRepo.count({
+            and: [
+                { email: user.email },
+                { password: user.password },
+            ],
+        }));
+        if (userExists) {
+            throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
+        }
+        return await this.userRepo.create(user);
     }
     async payment(pay) {
         // Check that credit card info is supplied
@@ -117,6 +141,13 @@ __decorate([
     __metadata("design:paramtypes", [Number, Date, String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getDonationsByUserId", null);
+__decorate([
+    rest_1.post('/register'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_1.User]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "user", null);
 __decorate([
     rest_1.post('/payment-methods'),
     __param(0, rest_1.requestBody()),

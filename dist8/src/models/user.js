@@ -50,27 +50,6 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], User.prototype, "ccnum", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], User.prototype, "exp", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], User.prototype, "cvc", void 0);
 User = __decorate([
     repository_1.model()
 ], User);

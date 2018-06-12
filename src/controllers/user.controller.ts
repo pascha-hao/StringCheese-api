@@ -10,6 +10,8 @@ import { User } from "../models/user";
 import { Login } from "../models/login";
 import { Payment } from "../models/payment";
 
+import { sign, verify } from'jsonwebtoken';
+
 export class UserController {
 
   constructor(
@@ -45,6 +47,13 @@ export class UserController {
       throw new HttpErrors.Unauthorized('invalid credentials');
     }
 
+    sign({
+      user: User
+    }, 'shh', {
+      issuer: 'auth.ix.co.za',
+      audience: 'ix.co.za'
+    });
+
     return await this.userRepo.findOne({
       where: {
         and: [
@@ -77,7 +86,27 @@ export class UserController {
     console.log(dateFrom);
   }
 
+  @post('/register')
+  async user(@requestBody() user: User) {
+    // Check that email and password are both supplied
+    if (!user.email || !user.password || !user.firstname || !user.lastname) {
+      throw new HttpErrors.Unauthorized('invalid credentials');
+    }
 
+    // Check that email and password are valid
+    let userExists: boolean = !!(await this.userRepo.count({
+      and: [
+        { email: user.email },
+        { password: user.password },
+      ],
+    }));
+
+    if (userExists) {
+      throw new HttpErrors.Unauthorized('invalid credentials');
+    }
+
+    return await this.userRepo.create(user);
+  }
 
   @post('/payment-methods')
   async payment(@requestBody() pay: Payment) {

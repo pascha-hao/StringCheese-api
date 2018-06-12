@@ -15,6 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function (db, callback) {
+  
   db.createTable('user-donation', {
     id: { type: 'int', primaryKey: true, autoIncrement: true },
     user_id:
