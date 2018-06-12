@@ -1,16 +1,11 @@
-// Uncomment these imports to begin using these cool features!
-
-// import {inject} from @loopback/context;
-
-
 import { repository } from "@loopback/repository";
 import { UserRepository } from "../repositories/user.repository";
-import { post, get, requestBody, HttpErrors, param } from "@loopback/rest";
+import { post, get, patch, del, requestBody, HttpErrors, param } from "@loopback/rest";
 import { User } from "../models/user";
 import { Login } from "../models/login";
 import { Payment } from "../models/payment";
-
 import { sign, verify } from'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
 
 export class UserController {
 
@@ -39,7 +34,6 @@ export class UserController {
     let userExists: boolean = !!(await this.userRepo.count({
       and: [
         { email: login.email },
-        { password: login.password },
       ],
     }));
 
@@ -47,21 +41,37 @@ export class UserController {
       throw new HttpErrors.Unauthorized('invalid credentials');
     }
 
-    sign({
-      user: User
-    }, 'shh', {
-      issuer: 'auth.ix.co.za',
-      audience: 'ix.co.za'
-    });
+    else {
+      var currentUser = await this.userRepo.findOne({
+        where: {
+          and: [
+            { email: login.email },
+          ],
+        },
+      });
 
-    return await this.userRepo.findOne({
-      where: {
-        and: [
-          { email: login.email },
-          { password: login.password }
-        ],
-      },
-    });
+      let same = await bcrypt.compare(login.password, currentUser.password);
+
+      if (same) {
+        var jwt = sign(
+          {
+            user: currentUser,
+          },
+          'shh',
+          {
+            issuer: 'auth.ix.co.za',
+            audience: 'ix.co.za',
+          },
+        );
+
+        return {
+          token: jwt,
+        };
+      }
+      else {
+        throw new HttpErrors.Unauthorized('Invalid Login Information');
+      }
+    }
   }
 
   @get('/users/{id}')
@@ -76,6 +86,32 @@ export class UserController {
     return await this.userRepo.findById(id);
   }
 
+  @get('/users')
+  async getUserbyKey(@param.query.string('jwt') jwt: string) {
+      if (!jwt) throw new HttpErrors.Unauthorized('JWT token is required.');
+
+      try {
+        var jwtBody = verify(jwt, 'shh');
+        console.log(jwtBody);
+        return jwtBody;
+      } 
+      catch (err) {
+        throw new HttpErrors.BadRequest('JWT token invalid');
+      }
+  }
+
+  @del('/users')
+  async deleteUserbyID(@param.path.number('id') id: number) {
+      let userExists: boolean = !!(await this.userRepo.count({ id }));
+      if (userExists) {
+        this.userRepo.deleteById(id);
+
+      }
+      else {
+          throw new HttpErrors.BadRequest(`user ID ${id} does not exist`);
+      }
+  }
+
   @get('/users/{user_id}/donations')
   async getDonationsByUserId(
     @param.path.number('user_id') userId: number,
@@ -87,25 +123,52 @@ export class UserController {
   }
 
   @post('/register')
-  async user(@requestBody() user: User) {
+  async createUser(@requestBody() user: User) {
     // Check that email and password are both supplied
     if (!user.email || !user.password || !user.firstname || !user.lastname) {
       throw new HttpErrors.Unauthorized('invalid credentials');
     }
 
-    // Check that email and password are valid
-    let userExists: boolean = !!(await this.userRepo.count({
-      and: [
-        { email: user.email },
-        { password: user.password },
-      ],
-    }));
+    // Check that email is valid
+    let userExists: boolean = !!(await this.userRepo.count({ username: user.username }));
 
     if (userExists) {
       throw new HttpErrors.Unauthorized('invalid credentials');
     }
 
-    return await this.userRepo.create(user);
+    let emailExists: boolean = !!(await this.userRepo.count({ email: user.email }));
+
+    if (emailExists) {
+      throw new HttpErrors.BadRequest('email is already registered');
+    }
+
+    let hashedPassword = await bcrypt.hash(user.password, 10);
+
+    var userToStore = new User();
+    userToStore.firstname = user.firstname;
+    userToStore.lastname = user.lastname;
+    userToStore.username = user.username;
+    userToStore.email = user.email;
+    userToStore.dob = user.dob;
+    userToStore.password = hashedPassword;
+
+    let storedUser = await this.userRepo.create(userToStore);
+    storedUser.password = "";
+
+    var jwt = sign(
+      {
+        user: storedUser,
+      },
+      'shh',
+      {
+        issuer: 'auth.ix.co.za',
+        audience: 'ix.co.za',
+      },
+    );
+
+    return {
+      token: jwt,
+    };
   }
 
   @post('/payment-methods')
@@ -122,7 +185,31 @@ export class UserController {
       user.exp = "pay.cvc";
       this.userRepo.update(user);
     }
-
   }
+
+  @post('/login-with-query')
+  async loginWithQuery(@requestBody() login: Login): Promise<User> {
+    var users = await this.userRepo.find({
+      where: {
+        and: [{ email: login.email }, { password: login.password }],
+      },
+    });
+
+    if (users.length == 0) {
+      throw new HttpErrors.NotFound('User not found, sorry!');
+    }
+
+    return users[0];
+  }
+
+  @patch('/user/{id}')
+  async updateUserById(
+    @param.path.number('id') id: number,
+    @requestBody() user: User,
+  ): Promise<boolean> {
+    id = +id;
+    return await this.userRepo.updateById(id, user);
+  }
+
 
 }
