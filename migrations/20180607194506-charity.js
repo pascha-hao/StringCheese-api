@@ -14,13 +14,20 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function (db, callback) {
+exports.up = function(db, callback) {
   db.createTable('charity', {
-    id: { type: 'int', primaryKey: true, autoIncrement: true }, 
-    name: { type: 'string'},
-    slogan: { type: 'string'},
-    description: { type: 'string'}
+    charity_id: {
+      type: 'int', 
+      primaryKey: true 
+    }, 
+    name: {
+      type: 'string'
+    },
+    charity_id: {
+      type: 'int'
+    }
   }, callback);
+  
 };
 
 exports.down = function(db) {

@@ -14,26 +14,30 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function (db, callback) {
+exports.up = function(db, callback) {
   db.createTable('address', {
-    user_id:
-    {
-      type: 'int',
-      foreignKey: {
-        name: 'id',
-        table: 'user',
-        rules: {
-          onDelete: 'CASCADE',
-          onUpdate: 'RESTRICT'
-        },
-        mapping: 'user_id'
-      }
+    address_id: {
+      type: 'int', 
+      primaryKey: true 
+    }, 
+    user_id: {
+      type: 'int'
     },
-    street_address: { type: 'string'}, 
-    city: { type: 'string'},
-    state: { type: 'string'},
-    zip_code: { type: 'string'}
+    addressline: {
+      type: 'string'
+    },
+    country: {
+      type: 'string'
+    },
+    state: {
+      type: 'string',
+      length: 40
+    },
+    zipcode: {
+      type: 'int'
+    }
   }, callback);
+  
 };
 
 exports.down = function(db) {

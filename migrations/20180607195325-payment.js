@@ -14,26 +14,27 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function (db, callback) {
+exports.up = function(db, callback) {
   db.createTable('payment', {
-    user_id:
-    {
-      type: 'int',
-      foreignKey: {
-        name: 'id',
-        table: 'user',
-        rules: {
-          onDelete: 'CASCADE',
-          onUpdate: 'RESTRICT'
-        },
-        mapping: 'id'
-      }
+    payment_id: {
+      type: 'int', 
+      primaryKey: true 
+    }, 
+    user_id: {
+      type: 'int'
     },
-    ccnum: { type: 'string'}, 
-    exp: { type: 'date'},
-    cvc: { type: 'string'},
-    bank: { type: 'string'}
+    card_number: {
+      type: 'int'
+    },
+    expiration_date: {
+      type: 'int'
+    },
+    bank: {
+      type: 'string',
+      length: 40
+    }
   }, callback);
+  
 };
 
 exports.down = function(db) {
