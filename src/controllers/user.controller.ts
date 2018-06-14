@@ -187,11 +187,11 @@ export class UserController {
     return await this.userRepo.updateById(id, user);
   }
 
-  @get('/users/{id}/donations')
-  async getDonationsbyUserId(@param.path.number('user_id') id: number,
+  @get('/users/{user_id}/donations')
+  async getDonationsbyUserId(@param.path.number('user_id') user_id: number,
   @requestBody() donation: Donation): Promise<Array<Donation>> {
 
-    return await this.donationRepo.find({where: {user_id: id}})
+    return await this.donationRepo.find({where: {user_id: user_id}})
   }
 
   @get('/donations')
