@@ -30,7 +30,11 @@
     "posttest": "npm run lint",
     "prestart": "npm run build:current",
     "start": "node .",
-    "prepublishOnly": "npm run test"
+    "prepublishOnly": "npm run test",
+    "migrateUp": "db-migrate up; npm start",
+    "eliza": "NODE_ENV=eliza DATABASE_PASSWORD=password npm run migrateUp",
+    "pascha": "NODE_ENV=pascha DATABASE_PASSWORD=root1234 npm run migrateUp",
+    "tom": "NODE_ENV=tom DATABASE_PASSWORD=root1234 npm run migrateUp"
   },
   "repository": {
     "type": "git"
