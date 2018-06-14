@@ -12,14 +12,23 @@ export class CharityController {
 
   constructor(
     @repository(CharityRepository.name) private charityRepo: CharityRepository
-  ) {}
+  ) { }
 
   @post('/charities')
   async register(@requestBody() charity: Charity) {
+    if (!charity.name) {
+      throw new HttpErrors.BadRequest('missing data');
+    }
+
+    let charityExists: boolean = !!(await this.charityRepo.count({ name: charity.name }));
+
+    if (charityExists) {
+      throw new HttpErrors.BadRequest('charity already exists');
+    }
     return await this.charityRepo.create(charity);
   }
 
-  @get('/charity')
+  @get('/charities')
   async getAllCharities(): Promise<Array<Charity>> {
     return await this.charityRepo.find();
   }
@@ -35,5 +44,7 @@ export class CharityController {
 
     return await this.charityRepo.findById(id);
   }
+
+
 
 }

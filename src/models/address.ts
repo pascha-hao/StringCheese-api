@@ -2,37 +2,45 @@ import {Entity, property, model} from '@loopback/repository';
 
 @model()
 export class Address extends Entity {
-  @property({
-    type: 'number',
-    id: true
-  })
-  address_id?: number;
+    
+    @property({
+        type: 'number',
+        id: true
+    })
+    id?: number;
 
-  @property({
-    type: 'string',
-    required: true
-  })
-  addressline: string;
+    @property({
+        type: 'number',
+        id: true
+    })
+    user_id?: number;
 
-  @property({
-    type: 'string',
-    //required: true
-  })
-  country: string;
+    @property({
+        type:'string'
+    })
+    addressLine: string;
 
-  @property({
-    type: 'string',
-    //required: true
-  })
-  state: string;
+    @property({
+        type:'string'
+    })
+    country: string;
 
-  @property({
-    type: 'string',
-    //required: true
-  })
-  zipcode: string;
+    @property({
+        type:'string'
+    })
+    state: string;
 
-  getId() {
-    return this.id;
-  }
+    @property({
+        type:'string'
+    })
+    zipCode: string;
+
+    @property({
+        type:'string'
+    })
+    phoneNum: string;
+
+    getAddressId() {
+        return this.id;
+    }
 }

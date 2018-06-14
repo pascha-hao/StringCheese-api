@@ -6,7 +6,7 @@ export class Post extends Entity {
     type: 'number',
     id: true
   })
-  post_id?: number;
+  id?: number;
 
   @property({
     type: 'string',
