@@ -27,12 +27,18 @@ export class UserController {
   async login(@requestBody() login: Login): Promise<any> {
     var users = await this.userRepo.find();
 
-    var email = login.email;
+    var username = login.email;
+    console.log(login.email);
+    console.log(login.password);
 
     for (var i = 0; i < users.length; i++) {
       var user = users[i];
-      if (user.email == email && await bcrypt.compare(login.password, user.password)) {
-
+      // console.log("user password");
+      console.log(user.password);
+      // console.log("login password");
+      // console.log(login.password);
+      if (user.email == username && await bcrypt.compare(login.password, user.password)) {
+        console.log("yay");
         var jwt = sign(
           {
             user: {
@@ -178,8 +184,6 @@ export class UserController {
     // if (emailExists) {
     //   throw new HttpErrors.BadRequest('email is already registered');
     // }
-    console.log(user.password);
-    console.log(user.email);
     let hashedPassword = await bcrypt.hash(user.password, 10);
 
     var userToStore = new User();
