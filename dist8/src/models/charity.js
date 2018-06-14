@@ -21,7 +21,7 @@ __decorate([
         id: true
     }),
     __metadata("design:type", Number)
-], Charity.prototype, "id", void 0);
+], Charity.prototype, "charity_id", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
@@ -34,13 +34,25 @@ __decorate([
         type: 'string',
     }),
     __metadata("design:type", String)
-], Charity.prototype, "slogan", void 0);
+], Charity.prototype, "description", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
     }),
     __metadata("design:type", String)
-], Charity.prototype, "description", void 0);
+], Charity.prototype, "charitycardimg", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+    }),
+    __metadata("design:type", String)
+], Charity.prototype, "website", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+    }),
+    __metadata("design:type", String)
+], Charity.prototype, "logo", void 0);
 Charity = __decorate([
     repository_1.model()
 ], Charity);

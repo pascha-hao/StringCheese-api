@@ -10,7 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let Payment = class Payment extends repository_1.Entity {
+let Post = class Post extends repository_1.Entity {
+    getId() {
+        return this.id;
+    }
 };
 __decorate([
     repository_1.property({
@@ -18,51 +21,28 @@ __decorate([
         id: true
     }),
     __metadata("design:type", Number)
-], Payment.prototype, "payment_id", void 0);
+], Post.prototype, "post_id", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "user_id1", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "address_id1", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "card_number", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "expiration_date", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
         required: true
     }),
     __metadata("design:type", String)
-], Payment.prototype, "bank", void 0);
+], Post.prototype, "name", void 0);
 __decorate([
     repository_1.property({
-        type: 'number',
-        required: true
+        type: 'string',
     }),
-    __metadata("design:type", Number)
-], Payment.prototype, "CVV", void 0);
-Payment = __decorate([
+    __metadata("design:type", String)
+], Post.prototype, "description", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+    }),
+    __metadata("design:type", String)
+], Post.prototype, "postimg", void 0);
+Post = __decorate([
     repository_1.model()
-], Payment);
-exports.Payment = Payment;
-//# sourceMappingURL=payment.js.map
+], Post);
+exports.Post = Post;
+//# sourceMappingURL=post.js.map

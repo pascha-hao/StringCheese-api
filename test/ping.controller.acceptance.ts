@@ -1,9 +1,9 @@
 import {createClientForHandler, supertest} from '@loopback/testlab';
 import {RestServer} from '@loopback/rest';
-import {GoldenThreadApiApplication} from '../';
+import {StringCheeseApiApplication} from '../';
 
 describe('PingController', () => {
-  let app: GoldenThreadApiApplication;
+  let app: StringCheeseApiApplication;
   let server: RestServer;
   let client: supertest.SuperTest<supertest.Test>;
 
@@ -29,7 +29,7 @@ describe('PingController', () => {
   });
 
   function givenAnApplication() {
-    app = new GoldenThreadApiApplication({
+    app = new StringCheeseApiApplication({
       rest: {
         port: 0,
       },

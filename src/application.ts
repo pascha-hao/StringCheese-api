@@ -15,7 +15,7 @@ import {
 } from '@loopback/repository';
 
 
-export class GoldenThreadApiApplication extends BootMixin(RepositoryMixin(RestApplication)) {
+export class StringCheeseApiApplication extends BootMixin(RepositoryMixin(RestApplication)) {
   constructor(options?: ApplicationConfig) {
     super(options);
 
@@ -41,7 +41,7 @@ export class GoldenThreadApiApplication extends BootMixin(RepositoryMixin(RestAp
       host: 'localhost',
       port: 3306,
       //database: 'test',
-      database: 'golden_thread',
+      database: 'StringCheese',
       user: 'root',
       password: 'root1234'
     });
