@@ -7,9 +7,7 @@ export declare class UserController {
     constructor(userRepo: UserRepository);
     register(user: User): Promise<User>;
     getAllUsers(): Promise<Array<User>>;
-    login(login: Login): Promise<{
-        token: string;
-    }>;
+    login(login: Login): Promise<any>;
     findUsersById(id: number): Promise<User>;
     getUserbyKey(jwt: string): Promise<string | object>;
     deleteUserbyID(id: number): Promise<void>;

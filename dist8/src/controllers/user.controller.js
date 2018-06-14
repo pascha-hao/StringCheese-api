@@ -31,44 +31,75 @@ let UserController = class UserController {
         return await this.userRepo.find();
     }
     async login(login) {
-        // Check that email and password are both supplied
-        if (!login.email || !login.password) {
-            throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
-        }
-        // Check that email and password are valid
-        let userExists = !!(await this.userRepo.count({
-            and: [
-                { email: login.email },
-            ],
-        }));
-        if (!userExists) {
-            throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
-        }
-        else {
-            var currentUser = await this.userRepo.findOne({
-                where: {
-                    and: [
-                        { email: login.email },
-                    ],
-                },
-            });
-            let same = await bcrypt.compare(login.password, currentUser.password);
-            if (same) {
+        var users = await this.userRepo.find();
+        var email = login.email;
+        for (var i = 0; i < users.length; i++) {
+            var user = users[i];
+            if (user.email == email && await bcrypt.compare(login.password, user.password)) {
                 var jwt = jsonwebtoken_1.sign({
-                    user: currentUser,
+                    user: {
+                        id: user.id,
+                        firstname: user.firstname,
+                        email: user.email
+                    },
+                    anything: "hello"
                 }, 'shh', {
                     issuer: 'auth.ix.co.za',
                     audience: 'ix.co.za',
                 });
                 return {
                     token: jwt,
+                    something: "lol"
                 };
             }
-            else {
-                throw new rest_1.HttpErrors.Unauthorized('Invalid Login Information');
-            }
         }
+        throw new rest_1.HttpErrors.Unauthorized('User not found, sorry!');
+        //return "Error";
     }
+    // @post('/login')
+    // async login(@requestBody() login: Login) {
+    //   // Check that email and password are both supplied
+    //   if (!login.email || !login.password) {
+    //     throw new HttpErrors.Unauthorized('invalid credentials');
+    //   }
+    //   // Check that email and password are valid
+    //   let userExists: boolean = !!(await this.userRepo.count({
+    //     and: [
+    //       { email: login.email },
+    //     ],
+    //   }));
+    //   if (!userExists) {
+    //     throw new HttpErrors.Unauthorized('invalid credentials');
+    //   }
+    //   else {
+    //     var currentUser = await this.userRepo.findOne({
+    //       where: {
+    //         and: [
+    //           { email: login.email },
+    //         ],
+    //       },
+    //     });
+    //     let same = await bcrypt.compare(login.password, currentUser.password);
+    //     if (same) {
+    //       var jwt = sign(
+    //         {
+    //           user: currentUser,
+    //         },
+    //         'shh',
+    //         {
+    //           issuer: 'auth.ix.co.za',
+    //           audience: 'ix.co.za',
+    //         },
+    //       );
+    //       return {
+    //         token: jwt,
+    //       };
+    //     }
+    //     else {
+    //       throw new HttpErrors.Unauthorized('Invalid Login Information');
+    //     }
+    //   }
+    // }
     async findUsersById(id) {
         // Check for valid ID
         let userExists = !!(await this.userRepo.count({ id }));
@@ -103,26 +134,26 @@ let UserController = class UserController {
         console.log(dateFrom);
     }
     async createUser(user) {
-        // Check that email and password are both supplied
-        if (!user.email || !user.password || !user.firstname || !user.lastname) {
-            throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
-        }
-        // Check that email is valid
-        let userExists = !!(await this.userRepo.count({ username: user.username }));
-        if (userExists) {
-            throw new rest_1.HttpErrors.Unauthorized('invalid credentials');
-        }
-        let emailExists = !!(await this.userRepo.count({ email: user.email }));
-        if (emailExists) {
-            throw new rest_1.HttpErrors.BadRequest('email is already registered');
-        }
+        // // Check that email and password are both supplied
+        // if (!user.email || !user.password || !user.firstname || !user.lastname) {
+        //   throw new HttpErrors.Unauthorized('invalid credentials');
+        // }
+        // // Check that email is valid
+        // let userExists: boolean = !!(await this.userRepo.count({ username: user.username }));
+        // if (userExists) {
+        //   throw new HttpErrors.Unauthorized('invalid credentials');
+        // }
+        // let emailExists: boolean = !!(await this.userRepo.count({ email: user.email }));
+        // if (emailExists) {
+        //   throw new HttpErrors.BadRequest('email is already registered');
+        // }
+        console.log(user.password);
+        console.log(user.email);
         let hashedPassword = await bcrypt.hash(user.password, 10);
         var userToStore = new user_1.User();
         userToStore.firstname = user.firstname;
         userToStore.lastname = user.lastname;
-        userToStore.username = user.username;
         userToStore.email = user.email;
-        userToStore.dob = user.dob;
         userToStore.password = hashedPassword;
         let storedUser = await this.userRepo.create(userToStore);
         storedUser.password = "";
