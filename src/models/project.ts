@@ -7,7 +7,7 @@ export class Project extends Entity {
     type: 'number',
     id: true
   })
-  project_id?: number;
+  id?: number;
 
   @property({
     type: 'string',

@@ -4,13 +4,18 @@ import { post, get, patch, del, requestBody, HttpErrors, param } from "@loopback
 import { User } from "../models/user";
 import { Login } from "../models/login";
 import { Payment } from "../models/payment";
+import { Donation } from "../models/donation";
 import { sign, verify } from'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+import { CharityRepository } from "../repositories/charity.repository";
+import { DonationRepository } from "../repositories/donation.repository";
 
 export class UserController {
 
   constructor(
-    @repository(UserRepository.name) private userRepo: UserRepository
+    @repository(UserRepository.name) private userRepo: UserRepository,
+    @repository(CharityRepository.name) private charityRepo: CharityRepository,
+    @repository(DonationRepository.name) private donationRepo: DonationRepository
   ) {}
 
   @post('/users')
@@ -33,10 +38,9 @@ export class UserController {
 
     for (var i = 0; i < users.length; i++) {
       var user = users[i];
-      // console.log("user password");
+ 
       console.log(user.password);
-      // console.log("login password");
-      // console.log(login.password);
+
       if (user.email == username && await bcrypt.compare(login.password, user.password)) {
         console.log("yay");
         var jwt = sign(
@@ -65,57 +69,6 @@ export class UserController {
     throw new HttpErrors.Unauthorized('User not found, sorry!');
     //return "Error";
   }
-
-  // @post('/login')
-  // async login(@requestBody() login: Login) {
-  //   // Check that email and password are both supplied
-  //   if (!login.email || !login.password) {
-  //     throw new HttpErrors.Unauthorized('invalid credentials');
-  //   }
-
-  //   // Check that email and password are valid
-  //   let userExists: boolean = !!(await this.userRepo.count({
-  //     and: [
-  //       { email: login.email },
-  //     ],
-  //   }));
-
-  //   if (!userExists) {
-  //     throw new HttpErrors.Unauthorized('invalid credentials');
-  //   }
-
-  //   else {
-  //     var currentUser = await this.userRepo.findOne({
-  //       where: {
-  //         and: [
-  //           { email: login.email },
-  //         ],
-  //       },
-  //     });
-
-  //     let same = await bcrypt.compare(login.password, currentUser.password);
-
-  //     if (same) {
-  //       var jwt = sign(
-  //         {
-  //           user: currentUser,
-  //         },
-  //         'shh',
-  //         {
-  //           issuer: 'auth.ix.co.za',
-  //           audience: 'ix.co.za',
-  //         },
-  //       );
-
-  //       return {
-  //         token: jwt,
-  //       };
-  //     }
-  //     else {
-  //       throw new HttpErrors.Unauthorized('Invalid Login Information');
-  //     }
-  //   }
-  // }
 
   @get('/users/{id}')
   async findUsersById(@param.path.number('id') id: number): Promise<User> {
@@ -148,7 +101,6 @@ export class UserController {
       let userExists: boolean = !!(await this.userRepo.count({ id }));
       if (userExists) {
         this.userRepo.deleteById(id);
-
       }
       else {
           throw new HttpErrors.BadRequest(`user ID ${id} does not exist`);
@@ -167,23 +119,7 @@ export class UserController {
 
   @post('/register')
   async createUser(@requestBody() user: User) {
-    // // Check that email and password are both supplied
-    // if (!user.email || !user.password || !user.firstname || !user.lastname) {
-    //   throw new HttpErrors.Unauthorized('invalid credentials');
-    // }
 
-    // // Check that email is valid
-    // let userExists: boolean = !!(await this.userRepo.count({ username: user.username }));
-
-    // if (userExists) {
-    //   throw new HttpErrors.Unauthorized('invalid credentials');
-    // }
-
-    // let emailExists: boolean = !!(await this.userRepo.count({ email: user.email }));
-
-    // if (emailExists) {
-    //   throw new HttpErrors.BadRequest('email is already registered');
-    // }
     let hashedPassword = await bcrypt.hash(user.password, 10);
 
     var userToStore = new User();
@@ -249,6 +185,18 @@ export class UserController {
   ): Promise<boolean> {
     id = +id;
     return await this.userRepo.updateById(id, user);
+  }
+
+  @get('/users/{id}/donations')
+  async getDonationsbyUserId(@param.path.number('user_id') id: number,
+  @requestBody() donation: Donation): Promise<Array<Donation>> {
+
+    return await this.donationRepo.find({where: {user_id: id}})
+  }
+
+  @get('/donations')
+  async getAllDonations(@requestBody() donation: Donation): Promise<Array<Donation>> {
+    return await this.donationRepo.find();
   }
 
 

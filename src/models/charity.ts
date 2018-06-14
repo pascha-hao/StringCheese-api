@@ -6,7 +6,7 @@ export class Charity extends Entity {
     type: 'number',
     id: true
   })
-  charity_id?: number;
+  id?: number;
 
   @property({
     type: 'string',

@@ -6,7 +6,7 @@ export class Role extends Entity {
     type: 'number',
     id: true
   })
-  role_id?: number;
+  id?: number;
 
   @property({
     type: 'string',
