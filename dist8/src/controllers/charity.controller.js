@@ -23,6 +23,13 @@ let CharityController = class CharityController {
         this.charityRepo = charityRepo;
     }
     async register(charity) {
+        if (!charity.name) {
+            throw new rest_1.HttpErrors.BadRequest('missing data');
+        }
+        let charityExists = !!(await this.charityRepo.count({ name: charity.name }));
+        if (charityExists) {
+            throw new rest_1.HttpErrors.BadRequest('charity already exists');
+        }
         return await this.charityRepo.create(charity);
     }
     async getAllCharities() {
@@ -45,7 +52,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CharityController.prototype, "register", null);
 __decorate([
-    rest_1.get('/charity'),
+    rest_1.get('/charities'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

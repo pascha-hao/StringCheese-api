@@ -107,15 +107,15 @@ export class UserController {
       }
   }
 
-  @get('/users/{user_id}/donations')
-  async getDonationsByUserId(
-    @param.path.number('user_id') userId: number,
-    @param.query.date('date_from') dateFrom: Date,
-    @param.header.string('authorization') authorization: string
-  ) {
-    console.log(userId);
-    console.log(dateFrom);
-  }
+  // @get('/users/{user_id}/donations')
+  // async getDonationsByUserId(
+  //   @param.path.number('user_id') userId: number,
+  //   @param.query.date('date_from') dateFrom: Date,
+  //   @param.header.string('authorization') authorization: string
+  // ) {
+  //   console.log(userId);
+  //   console.log(dateFrom);
+  // }
 
   @post('/register')
   async createUser(@requestBody() user: User) {

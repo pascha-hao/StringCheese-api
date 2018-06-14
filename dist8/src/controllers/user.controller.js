@@ -18,11 +18,16 @@ const rest_1 = require("@loopback/rest");
 const user_1 = require("../models/user");
 const login_1 = require("../models/login");
 const payment_1 = require("../models/payment");
+const donation_1 = require("../models/donation");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const charity_repository_1 = require("../repositories/charity.repository");
+const donation_repository_1 = require("../repositories/donation.repository");
 let UserController = class UserController {
-    constructor(userRepo) {
+    constructor(userRepo, charityRepo, donationRepo) {
         this.userRepo = userRepo;
+        this.charityRepo = charityRepo;
+        this.donationRepo = donationRepo;
     }
     async register(user) {
         return await this.userRepo.create(user);
@@ -37,10 +42,7 @@ let UserController = class UserController {
         console.log(login.password);
         for (var i = 0; i < users.length; i++) {
             var user = users[i];
-            // console.log("user password");
             console.log(user.password);
-            // console.log("login password");
-            // console.log(login.password);
             if (user.email == username && await bcrypt.compare(login.password, user.password)) {
                 console.log("yay");
                 var jwt = jsonwebtoken_1.sign({
@@ -63,50 +65,6 @@ let UserController = class UserController {
         throw new rest_1.HttpErrors.Unauthorized('User not found, sorry!');
         //return "Error";
     }
-    // @post('/login')
-    // async login(@requestBody() login: Login) {
-    //   // Check that email and password are both supplied
-    //   if (!login.email || !login.password) {
-    //     throw new HttpErrors.Unauthorized('invalid credentials');
-    //   }
-    //   // Check that email and password are valid
-    //   let userExists: boolean = !!(await this.userRepo.count({
-    //     and: [
-    //       { email: login.email },
-    //     ],
-    //   }));
-    //   if (!userExists) {
-    //     throw new HttpErrors.Unauthorized('invalid credentials');
-    //   }
-    //   else {
-    //     var currentUser = await this.userRepo.findOne({
-    //       where: {
-    //         and: [
-    //           { email: login.email },
-    //         ],
-    //       },
-    //     });
-    //     let same = await bcrypt.compare(login.password, currentUser.password);
-    //     if (same) {
-    //       var jwt = sign(
-    //         {
-    //           user: currentUser,
-    //         },
-    //         'shh',
-    //         {
-    //           issuer: 'auth.ix.co.za',
-    //           audience: 'ix.co.za',
-    //         },
-    //       );
-    //       return {
-    //         token: jwt,
-    //       };
-    //     }
-    //     else {
-    //       throw new HttpErrors.Unauthorized('Invalid Login Information');
-    //     }
-    //   }
-    // }
     async findUsersById(id) {
         // Check for valid ID
         let userExists = !!(await this.userRepo.count({ id }));
@@ -136,24 +94,16 @@ let UserController = class UserController {
             throw new rest_1.HttpErrors.BadRequest(`user ID ${id} does not exist`);
         }
     }
-    async getDonationsByUserId(userId, dateFrom, authorization) {
-        console.log(userId);
-        console.log(dateFrom);
-    }
+    // @get('/users/{user_id}/donations')
+    // async getDonationsByUserId(
+    //   @param.path.number('user_id') userId: number,
+    //   @param.query.date('date_from') dateFrom: Date,
+    //   @param.header.string('authorization') authorization: string
+    // ) {
+    //   console.log(userId);
+    //   console.log(dateFrom);
+    // }
     async createUser(user) {
-        // // Check that email and password are both supplied
-        // if (!user.email || !user.password || !user.firstname || !user.lastname) {
-        //   throw new HttpErrors.Unauthorized('invalid credentials');
-        // }
-        // // Check that email is valid
-        // let userExists: boolean = !!(await this.userRepo.count({ username: user.username }));
-        // if (userExists) {
-        //   throw new HttpErrors.Unauthorized('invalid credentials');
-        // }
-        // let emailExists: boolean = !!(await this.userRepo.count({ email: user.email }));
-        // if (emailExists) {
-        //   throw new HttpErrors.BadRequest('email is already registered');
-        // }
         let hashedPassword = await bcrypt.hash(user.password, 10);
         var userToStore = new user_1.User();
         userToStore.firstname = user.firstname;
@@ -201,6 +151,12 @@ let UserController = class UserController {
         id = +id;
         return await this.userRepo.updateById(id, user);
     }
+    async getDonationsbyUserId(user_id, donation) {
+        return await this.donationRepo.find({ where: { user_id: user_id } });
+    }
+    async getAllDonations(donation) {
+        return await this.donationRepo.find();
+    }
 };
 __decorate([
     rest_1.post('/users'),
@@ -244,15 +200,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteUserbyID", null);
 __decorate([
-    rest_1.get('/users/{user_id}/donations'),
-    __param(0, rest_1.param.path.number('user_id')),
-    __param(1, rest_1.param.query.date('date_from')),
-    __param(2, rest_1.param.header.string('authorization')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Date, String]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "getDonationsByUserId", null);
-__decorate([
     rest_1.post('/register'),
     __param(0, rest_1.requestBody()),
     __metadata("design:type", Function),
@@ -281,9 +228,28 @@ __decorate([
     __metadata("design:paramtypes", [Number, user_1.User]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUserById", null);
+__decorate([
+    rest_1.get('/users/{user_id}/donations'),
+    __param(0, rest_1.param.path.number('user_id')),
+    __param(1, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, donation_1.Donation]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getDonationsbyUserId", null);
+__decorate([
+    rest_1.get('/donations'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [donation_1.Donation]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getAllDonations", null);
 UserController = __decorate([
     __param(0, repository_1.repository(user_repository_1.UserRepository.name)),
-    __metadata("design:paramtypes", [user_repository_1.UserRepository])
+    __param(1, repository_1.repository(charity_repository_1.CharityRepository.name)),
+    __param(2, repository_1.repository(donation_repository_1.DonationRepository.name)),
+    __metadata("design:paramtypes", [user_repository_1.UserRepository,
+        charity_repository_1.CharityRepository,
+        donation_repository_1.DonationRepository])
 ], UserController);
 exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map

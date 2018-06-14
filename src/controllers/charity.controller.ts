@@ -28,7 +28,7 @@ export class CharityController {
     return await this.charityRepo.create(charity);
   }
 
-  @get('/charity')
+  @get('/charities')
   async getAllCharities(): Promise<Array<Charity>> {
     return await this.charityRepo.find();
   }
@@ -45,6 +45,6 @@ export class CharityController {
     return await this.charityRepo.findById(id);
   }
 
-  
+
 
 }
