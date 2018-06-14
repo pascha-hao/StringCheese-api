@@ -20,7 +20,10 @@ exports.up = function(db, callback) {
       type: 'int', 
       primaryKey: true 
     }, 
-    user_id: {
+    user_id1: {
+      type: 'int'
+    },
+    address_id1: {
       type: 'int'
     },
     card_number: {
@@ -32,6 +35,9 @@ exports.up = function(db, callback) {
     bank: {
       type: 'string',
       length: 40
+    },
+    CVV: {
+      type: 'int',
     }
   }, callback);
   

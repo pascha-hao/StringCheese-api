@@ -23,8 +23,17 @@ exports.up = function(db, callback) {
     name: {
       type: 'string'
     },
-    charity_id: {
-      type: 'int'
+    description: {
+      type: 'string'
+    },
+    charitycardimg: {
+      type: 'string'
+    },
+    website: {
+      type: 'string'
+    },
+    logo: {
+      type: 'string'
     }
   }, callback);
   

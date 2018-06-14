@@ -20,9 +20,6 @@ exports.up = function(db, callback) {
       type: 'int', 
       primaryKey: true 
     }, 
-    projectid: { 
-      type: 'int'
-    },
     title: {
       type: 'string',
       length: 40

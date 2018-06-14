@@ -20,9 +20,6 @@ exports.up = function(db, callback) {
       type: 'int', 
       primaryKey: true 
     }, 
-    user_id: { 
-      type: 'int'
-    },
     role: {
       type: 'string',
       length: 40

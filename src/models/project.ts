@@ -1,18 +1,19 @@
 import {Entity, property, model} from '@loopback/repository';
+import { NOTINITIALIZED } from 'dns';
 
 @model()
-export class Charity extends Entity {
+export class Project extends Entity {
   @property({
     type: 'number',
     id: true
   })
-  charity_id?: number;
+  project_id?: number;
 
   @property({
     type: 'string',
     required: true
   })
-  name: string;
+  title: string;
 
   @property({
     type: 'string',
@@ -24,19 +25,7 @@ export class Charity extends Entity {
     type: 'string',
     //required: true
   })
-  charitycardimg: string;
-
-  @property({
-    type: 'string',
-    //required: true
-  })
-  website: string;
-
-  @property({
-    type: 'string',
-    //required: true
-  })
-  logo: string;
+  projectimg: string;
 
   getId() {
     return this.id;

@@ -19,9 +19,6 @@ exports.up = function(db, callback) {
     donation_id: {
       type: 'int', 
       primaryKey: true 
-    }, 
-    user_id: {
-      type: 'int'
     },
     charity_id: {
       type: 'int'

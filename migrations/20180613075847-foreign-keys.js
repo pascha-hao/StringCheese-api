@@ -50,15 +50,15 @@ exports.up = function (db, callback)
   callback);
   db.addForeignKey('payment', 'user', 'payment_user_fk',
 {
-  'payment_id': 'user_id'
+  'user_id1': 'id'
 }, {
   onDelete: 'CASCADE',
   onUpdate: 'RESTRICT'
 }, 
   callback);
-  db.addForeignKey('payment', 'address', 'address_id_fk',
+  db.addForeignKey('payment', 'address', 'address_payment_fk',
 {
-  'payment_id': 'address_id'
+  'address_id1': 'address_id'
 }, {
   onDelete: 'CASCADE',
   onUpdate: 'RESTRICT'
@@ -72,9 +72,9 @@ exports.up = function (db, callback)
   onUpdate: 'RESTRICT'
 }, 
   callback);
-  db.addForeignKey('address', 'user', 'role_id_fk',
+  db.addForeignKey('post', 'project', 'post_project_fk',
 {
-  'address_id': 'id'
+  'post_id': 'project_id'
 }, {
   onDelete: 'CASCADE',
   onUpdate: 'RESTRICT'
@@ -85,13 +85,14 @@ exports.up = function (db, callback)
 }
 
 exports.down = function(db) {
-  db.removeForeignKey('donation', 'user_id1',
+  db.removeForeignKey('donation', 'donation_user_id_fk',
     db.removeForeignKey('donation', 'charity_id1',
-      db.removeForeignKey('payment', 'user_id2',
-        db.removeForeignKey('payment', 'address_id',
-          db.removeForeignKey('post', 'project_id',
-            db.removeForeignKey('project', 'charity_id2',
-              db.removeForeignKey('address', 'user_id3', callback)))))));
+      db.removeForeignKey('role', 'role_id_fk',
+        db.removeForeignKey('address', 'address_user_fk',
+          db.removeForeignKey('payment', 'payment_user_fk',
+            db.removeForeignKey('payment', 'address_payment_fk',
+              db.removeForeignKey('post', 'post_project_fk', 
+               db.removeForeignKey(callback))))))));
 
 };
 

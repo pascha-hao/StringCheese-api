@@ -33,6 +33,8 @@ export class GoldenThreadApiApplication extends BootMixin(RepositoryMixin(RestAp
       },
     };
 
+    var environment = process.env.NODE_ENV;
+
     var dataSourceConfig = new juggler.DataSource({
       name: "db",
       connector: "loopback-connector-mysql",

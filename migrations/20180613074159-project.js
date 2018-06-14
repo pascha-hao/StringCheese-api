@@ -19,9 +19,6 @@ exports.up = function(db, callback) {
     project_id: {
       type: 'int', 
       primaryKey: true 
-    }, 
-    charityid: { 
-      type: 'int'
     },
     title: {
       type: 'string',

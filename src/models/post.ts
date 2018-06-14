@@ -1,12 +1,12 @@
 import {Entity, property, model} from '@loopback/repository';
 
 @model()
-export class MyCharity extends Entity {
+export class Post extends Entity {
   @property({
     type: 'number',
     id: true
   })
-  id?: number;
+  post_id?: number;
 
   @property({
     type: 'string',
@@ -15,14 +15,18 @@ export class MyCharity extends Entity {
   name: string;
 
   @property({
-    type: 'number',
-    required: true
+    type: 'string',
+    //required: true
   })
-  percent: number;
+  description: string;
 
   @property({
-    type: 'number',
-    required: true
+    type: 'string',
+    //required: true
   })
-  userID: number;
+  postimg: string;
+
+  getId() {
+    return this.id;
+  }
 }
