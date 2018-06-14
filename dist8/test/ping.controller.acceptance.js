@@ -23,7 +23,7 @@ describe('PingController', () => {
         await client.get('/ping?msg=world').expect(200);
     });
     function givenAnApplication() {
-        app = new _1.GoldenThreadApiApplication({
+        app = new _1.StringCheeseApiApplication({
             rest: {
                 port: 0,
             },

@@ -1,4 +1,4 @@
-import { GoldenThreadApiApplication } from './application';
+import { StringCheeseApiApplication } from './application';
 import { ApplicationConfig } from '@loopback/core';
-export { GoldenThreadApiApplication };
-export declare function main(options?: ApplicationConfig): Promise<GoldenThreadApiApplication>;
+export { StringCheeseApiApplication };
+export declare function main(options?: ApplicationConfig): Promise<StringCheeseApiApplication>;

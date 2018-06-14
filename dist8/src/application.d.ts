@@ -2,7 +2,7 @@ import { ApplicationConfig } from '@loopback/core';
 import { RestApplication } from '@loopback/rest';
 import { Booter, Binding } from '@loopback/boot';
 import { Class, Repository, juggler } from '@loopback/repository';
-declare const GoldenThreadApiApplication_base: (new (...args: any[]) => {
+declare const StringCheeseApiApplication_base: (new (...args: any[]) => {
     [x: string]: any;
     projectRoot: string;
     bootOptions?: {
@@ -32,7 +32,7 @@ declare const GoldenThreadApiApplication_base: (new (...args: any[]) => {
     component(component: Class<{}>): void;
     mountComponentRepository(component: Class<{}>): void;
 }) & typeof RestApplication;
-export declare class GoldenThreadApiApplication extends GoldenThreadApiApplication_base {
+export declare class StringCheeseApiApplication extends StringCheeseApiApplication_base {
     constructor(options?: ApplicationConfig);
     start(): Promise<void>;
 }

@@ -7,7 +7,7 @@ const sequence_1 = require("./sequence");
 const boot_1 = require("@loopback/boot");
 /* tslint:enable:no-unused-variable */
 const repository_1 = require("@loopback/repository");
-class GoldenThreadApiApplication extends boot_1.BootMixin(repository_1.RepositoryMixin(rest_1.RestApplication)) {
+class StringCheeseApiApplication extends boot_1.BootMixin(repository_1.RepositoryMixin(rest_1.RestApplication)) {
     constructor(options) {
         super(options);
         // Set up the custom sequence
@@ -29,7 +29,7 @@ class GoldenThreadApiApplication extends boot_1.BootMixin(repository_1.Repositor
             host: 'localhost',
             port: 3306,
             //database: 'test',
-            database: 'golden_thread',
+            database: 'StringCheese',
             user: 'root',
             password: 'root1234'
         });
@@ -47,5 +47,5 @@ class GoldenThreadApiApplication extends boot_1.BootMixin(repository_1.Repositor
         console.log(`Try http://127.0.0.1:${port}/ping`);
     }
 }
-exports.GoldenThreadApiApplication = GoldenThreadApiApplication;
+exports.StringCheeseApiApplication = StringCheeseApiApplication;
 //# sourceMappingURL=application.js.map
