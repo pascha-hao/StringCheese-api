@@ -20,6 +20,7 @@ const login_1 = require("../models/login");
 const payment_1 = require("../models/payment");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const edit_1 = require("../models/edit");
 let UserController = class UserController {
     constructor(userRepo) {
         this.userRepo = userRepo;
@@ -172,6 +173,21 @@ let UserController = class UserController {
             token: jwt,
         };
     }
+    async editUser(edit) {
+        var editToStore = new edit_1.Edit();
+        editToStore.firstname = edit.firstname;
+        editToStore.email = edit.email;
+        let storedEdit = await this.userRepo.create(editToStore);
+        var jwt = jsonwebtoken_1.sign({
+            edit: storedEdit,
+        }, 'shh', {
+            issuer: 'auth.ix.co.za',
+            audience: 'ix.co.za',
+        });
+        return {
+            token: jwt,
+        };
+    }
     async payment(pay) {
         // Check that credit card info is supplied
         if (!pay.ccnum || !pay.exp || !pay.cvc || !pay.userID) {
@@ -259,6 +275,13 @@ __decorate([
     __metadata("design:paramtypes", [user_1.User]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "createUser", null);
+__decorate([
+    rest_1.post('/edit'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [edit_1.Edit]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "editUser", null);
 __decorate([
     rest_1.post('/payment-methods'),
     __param(0, rest_1.requestBody()),

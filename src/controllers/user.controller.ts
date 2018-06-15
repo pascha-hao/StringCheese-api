@@ -7,6 +7,8 @@ import { Payment } from "../models/payment";
 import { sign, verify } from'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 
+import { Edit } from "../models/edit";
+
 export class UserController {
 
   constructor(
@@ -198,6 +200,31 @@ export class UserController {
     var jwt = sign(
       {
         user: storedUser,
+      },
+      'shh',
+      {
+        issuer: 'auth.ix.co.za',
+        audience: 'ix.co.za',
+      },
+    );
+
+    return {
+      token: jwt,
+    };
+  }
+
+  @post('/edit')
+  async editUser(@requestBody() edit: Edit) {
+
+    var editToStore = new Edit();
+    editToStore.firstname = edit.firstname;
+    editToStore.email = edit.email;
+
+    let storedEdit = await this.userRepo.create(editToStore);
+
+    var jwt = sign(
+      {
+        edit: storedEdit,
       },
       'shh',
       {

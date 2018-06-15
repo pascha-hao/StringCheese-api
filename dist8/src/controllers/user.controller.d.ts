@@ -2,6 +2,7 @@ import { UserRepository } from "../repositories/user.repository";
 import { User } from "../models/user";
 import { Login } from "../models/login";
 import { Payment } from "../models/payment";
+import { Edit } from "../models/edit";
 export declare class UserController {
     private userRepo;
     constructor(userRepo: UserRepository);
@@ -13,6 +14,9 @@ export declare class UserController {
     deleteUserbyID(id: number): Promise<void>;
     getDonationsByUserId(userId: number, dateFrom: Date, authorization: string): Promise<void>;
     createUser(user: User): Promise<{
+        token: string;
+    }>;
+    editUser(edit: Edit): Promise<{
         token: string;
     }>;
     payment(pay: Payment): Promise<void>;
