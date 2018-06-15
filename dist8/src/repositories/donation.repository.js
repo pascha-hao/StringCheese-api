@@ -8,41 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let Project = class Project extends repository_1.Entity {
-    getId() {
-        return this.id;
+const core_1 = require("@loopback/core");
+const loopback_datasource_juggler_1 = require("loopback-datasource-juggler");
+const donation_1 = require("../models/donation");
+let DonationRepository = class DonationRepository extends repository_1.DefaultCrudRepository {
+    constructor(datasource) {
+        super(donation_1.Donation, datasource);
+        this.datasource = datasource;
     }
 };
-__decorate([
-    repository_1.property({
-        type: 'number',
-        id: true
-    }),
-    __metadata("design:type", Number)
-], Project.prototype, "id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", String)
-], Project.prototype, "title", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-    }),
-    __metadata("design:type", String)
-], Project.prototype, "description", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-    }),
-    __metadata("design:type", String)
-], Project.prototype, "projectimg", void 0);
-Project = __decorate([
-    repository_1.model()
-], Project);
-exports.Project = Project;
-//# sourceMappingURL=project.js.map
+DonationRepository = __decorate([
+    __param(0, core_1.inject('datasources.db')),
+    __metadata("design:paramtypes", [loopback_datasource_juggler_1.DataSource])
+], DonationRepository);
+exports.DonationRepository = DonationRepository;
+//# sourceMappingURL=donation.repository.js.map

@@ -21,7 +21,7 @@ __decorate([
         id: true
     }),
     __metadata("design:type", Number)
-], Post.prototype, "post_id", void 0);
+], Post.prototype, "id", void 0);
 __decorate([
     repository_1.property({
         type: 'string',

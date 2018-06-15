@@ -11,6 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
 let Payment = class Payment extends repository_1.Entity {
+    getPaymentMethodId() {
+        return this.id;
+    }
 };
 __decorate([
     repository_1.property({
@@ -18,49 +21,51 @@ __decorate([
         id: true
     }),
     __metadata("design:type", Number)
-], Payment.prototype, "payment_id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "user_id1", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "address_id1", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "card_number", void 0);
+], Payment.prototype, "id", void 0);
 __decorate([
     repository_1.property({
         type: 'number',
-        required: true
     }),
     __metadata("design:type", Number)
-], Payment.prototype, "expiration_date", void 0);
+], Payment.prototype, "cardNumber", void 0);
 __decorate([
     repository_1.property({
         type: 'number',
-        required: true
+        id: true
+    }),
+    __metadata("design:type", Number)
+], Payment.prototype, "user_id", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
     }),
     __metadata("design:type", String)
-], Payment.prototype, "bank", void 0);
+], Payment.prototype, "cardHolderName", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+    }),
+    __metadata("design:type", String)
+], Payment.prototype, "CVV", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+    }),
+    __metadata("design:type", String)
+], Payment.prototype, "cardType", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+    }),
+    __metadata("design:type", String)
+], Payment.prototype, "expirationDate", void 0);
 __decorate([
     repository_1.property({
         type: 'number',
-        required: true
+        id: true
     }),
     __metadata("design:type", Number)
-], Payment.prototype, "CVV", void 0);
+], Payment.prototype, "address_id", void 0);
 Payment = __decorate([
     repository_1.model()
 ], Payment);

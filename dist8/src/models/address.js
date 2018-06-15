@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
 let Address = class Address extends repository_1.Entity {
-    getId() {
+    getAddressId() {
         return this.id;
     }
 };
@@ -21,32 +21,44 @@ __decorate([
         id: true
     }),
     __metadata("design:type", Number)
-], Address.prototype, "address_id", void 0);
+], Address.prototype, "id", void 0);
 __decorate([
     repository_1.property({
-        type: 'string',
-        required: true
+        type: 'number',
+        id: true
+    }),
+    __metadata("design:type", Number)
+], Address.prototype, "user_id", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string'
     }),
     __metadata("design:type", String)
-], Address.prototype, "addressline", void 0);
+], Address.prototype, "addressLine", void 0);
 __decorate([
     repository_1.property({
-        type: 'string',
+        type: 'string'
     }),
     __metadata("design:type", String)
 ], Address.prototype, "country", void 0);
 __decorate([
     repository_1.property({
-        type: 'string',
+        type: 'string'
     }),
     __metadata("design:type", String)
 ], Address.prototype, "state", void 0);
 __decorate([
     repository_1.property({
-        type: 'string',
+        type: 'string'
     }),
     __metadata("design:type", String)
-], Address.prototype, "zipcode", void 0);
+], Address.prototype, "zipCode", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string'
+    }),
+    __metadata("design:type", String)
+], Address.prototype, "phoneNum", void 0);
 Address = __decorate([
     repository_1.model()
 ], Address);
