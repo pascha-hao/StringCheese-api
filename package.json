@@ -32,6 +32,7 @@
     "start": "node .",
     "prepublishOnly": "npm run test",
     "migrateUp": "db-migrate up; npm start",
+    "elizaMigrateDown": "NODE_ENV=eliza DATABASE_PASSWORD=password db-migrate down",
     "eliza": "NODE_ENV=eliza DATABASE_PASSWORD=password npm run migrateUp",
     "pascha": "NODE_ENV=pascha DATABASE_PASSWORD=root1234 npm run migrateUp",
     "tom": "NODE_ENV=tom DATABASE_PASSWORD=root1234 npm run migrateUp"

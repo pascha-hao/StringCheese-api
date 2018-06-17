@@ -16,10 +16,13 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db, callback) {
   db.createTable('role', {
-    role_id: {
+    id: {
       type: 'int', 
       primaryKey: true 
     }, 
+    user_id: {
+      type: 'int'
+    },
     role: {
       type: 'string',
       length: 40
@@ -28,8 +31,8 @@ exports.up = function(db, callback) {
     callback);
 };
 
-exports.down = function(db) {
-  db.dropTable('role')
+exports.down = function(db, callback) {
+  db.dropTable('role', callback)
   
 };
 

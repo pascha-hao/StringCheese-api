@@ -16,10 +16,13 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db, callback) {
   db.createTable('post', {
-    post_id: {
+    id: {
       type: 'int', 
       primaryKey: true 
     }, 
+    project_id: {
+      type: 'int'
+    },
     title: {
       type: 'string',
       length: 40
@@ -36,8 +39,8 @@ exports.up = function(db, callback) {
     callback);
 };
 
-exports.down = function(db) {
-  db.dropTable('post')
+exports.down = function(db, callback) {
+  db.dropTable('post', callback)
   
 };
 

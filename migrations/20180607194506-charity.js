@@ -16,7 +16,7 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db, callback) {
   db.createTable('charity', {
-    charity_id: {
+    id: {
       type: 'int', 
       primaryKey: true 
     }, 
@@ -24,7 +24,7 @@ exports.up = function(db, callback) {
       type: 'string'
     },
     description: {
-      type: 'string'
+      type: 'text'
     },
     charitycardimg: {
       type: 'string'

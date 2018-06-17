@@ -16,10 +16,13 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db, callback) {
   db.createTable('address', {
-    address_id: {
+    id: {
       type: 'int', 
       primaryKey: true 
     }, 
+    user_id: {
+      type: 'int'
+    },
     addressline: {
       type: 'string'
     },
@@ -37,8 +40,8 @@ exports.up = function(db, callback) {
   
 };
 
-exports.down = function(db) {
-  db.dropTable('address')
+exports.down = function(db, callback) {
+  db.dropTable('address', callback)
 };
 
 
