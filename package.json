@@ -32,6 +32,7 @@
     "start": "node .",
     "prepublishOnly": "npm run test",
     "migrateUp": "db-migrate up; npm start",
+    "migrateDownP": "NODE_ENV=pascha DATABASE_PASSWORD=root1234 db-migrate down",
     "eliza": "NODE_ENV=eliza DATABASE_PASSWORD=password npm run migrateUp",
     "pascha": "NODE_ENV=pascha DATABASE_PASSWORD=root1234 npm run migrateUp",
     "tom": "NODE_ENV=tom DATABASE_PASSWORD=root1234 npm run migrateUp"
@@ -61,7 +62,8 @@
     "bcrypt": "^2.0.1",
     "db-migrate-mysql": "^1.1.10",
     "jsonwebtoken": "^8.2.2",
-    "loopback-connector-mysql": "^5.2.0"
+    "loopback-connector-mysql": "^5.2.0",
+    "typescript": "^2.9.2"
   },
   "devDependencies": {
     "@loopback/build": "^0.6.5",

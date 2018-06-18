@@ -90,9 +90,10 @@ exports.down = function(db) {
       db.removeForeignKey('role', 'role_id_fk',
         db.removeForeignKey('address', 'address_user_fk',
           db.removeForeignKey('payment', 'payment_user_fk',
+          db.removeForeignKey('payment', 'project_charity_fk',
             db.removeForeignKey('payment', 'address_payment_fk',
-              db.removeForeignKey('post', 'post_project_fk', 
-               db.removeForeignKey(callback))))))));
+              db.removeForeignKey('post', 'post_project_fk', callback
+               ))))))));
 
 };
 
