@@ -30,9 +30,10 @@ let UserController = class UserController {
         this.charityRepo = charityRepo;
         this.donationRepo = donationRepo;
     }
-    async register(user) {
-        return await this.userRepo.create(user);
-    }
+    // @post('/users')
+    // async register(@requestBody() user: User) {
+    //   return await this.userRepo.create(user);
+    // }
     async getAllUsers() {
         return await this.userRepo.find();
     }
@@ -175,13 +176,6 @@ let UserController = class UserController {
         return await this.donationRepo.find();
     }
 };
-__decorate([
-    rest_1.post('/users'),
-    __param(0, rest_1.requestBody()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_1.User]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "register", null);
 __decorate([
     rest_1.get('/users'),
     __metadata("design:type", Function),
