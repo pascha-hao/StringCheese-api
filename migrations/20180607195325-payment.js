@@ -16,14 +16,14 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db, callback) {
   db.createTable('payment', {
-    payment_id: {
+    id: {
       type: 'int', 
       primaryKey: true 
     }, 
-    user_id1: {
+    user_id: {
       type: 'int'
     },
-    address_id1: {
+    address_id: {
       type: 'int'
     },
     card_number: {
@@ -43,8 +43,8 @@ exports.up = function(db, callback) {
   
 };
 
-exports.down = function(db) {
-  db.dropTable('payment')
+exports.down = function(db, callback) {
+  db.dropTable('payment', callback)
 };
 
 exports._meta = {

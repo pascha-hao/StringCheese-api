@@ -21,7 +21,7 @@ exports.up = function(db, callback) {
   return null;
 };
 
-exports.down = function(db) {
+exports.down = function(db, callback) {
   return null;
 };
 

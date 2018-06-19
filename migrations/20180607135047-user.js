@@ -41,8 +41,8 @@ exports.up = function(db, callback) {
   
 };
 
-exports.down = function (db) {
-  db.dropTable('user')
+exports.down = function (db, callback) {
+  db.dropTable('user', callback)
 };
 
 exports._meta = {
