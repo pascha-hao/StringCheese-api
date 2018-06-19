@@ -51,7 +51,9 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 User = __decorate([
-    repository_1.model()
+    repository_1.model({
+        name: "user"
+    })
 ], User);
 exports.User = User;
 //# sourceMappingURL=user.js.map
