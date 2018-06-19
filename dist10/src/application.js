@@ -9,7 +9,12 @@ const boot_1 = require("@loopback/boot");
 const repository_1 = require("@loopback/repository");
 class StringCheeseApiApplication extends boot_1.BootMixin(repository_1.RepositoryMixin(rest_1.RestApplication)) {
     constructor(options) {
-        super(options);
+        //super(options);
+        super({
+            rest: {
+                port: process.env.PORT || 3000
+            }
+        });
         // Set up the custom sequence
         this.sequence(sequence_1.MySequence);
         this.projectRoot = __dirname;
@@ -33,11 +38,11 @@ class StringCheeseApiApplication extends boot_1.BootMixin(repository_1.Repositor
         var dataSourceConfig = new repository_1.juggler.DataSource({
             name: "db",
             connector: "loopback-connector-mysql",
-            host: 'localhost',
+            host: process.env.DATABASE_HOST,
             port: 3306,
-            database: 'StringCheese',
-            user: 'root',
-            password: databasePassword
+            database: process.env.DATABASE_NAME,
+            user: process.env.DATABASE_USER,
+            password: process.env.DATABASE_PASSWORD
         });
         // var dataSourceConfig = new juggler.DataSource({
         //   name: "db",
