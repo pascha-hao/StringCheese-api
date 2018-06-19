@@ -45,20 +45,20 @@ export class StringCheeseApiApplication extends BootMixin(RepositoryMixin(RestAp
       databasePassword = "root1234"
     }
 
-    // var dataSourceConfig = new juggler.DataSource({
-    //   name: "db",
-    //   connector: "loopback-connector-mysql",
-    //   host: 'localhost',
-    //   port: 3306,
-    //   database: 'StringCheese',
-    //   user: 'root',
-    //   password: databasePassword
-    // });
-    
     var dataSourceConfig = new juggler.DataSource({
       name: "db",
-      connector: "memory"
+      connector: "loopback-connector-mysql",
+      host: 'localhost',
+      port: 3306,
+      database: 'StringCheese',
+      user: 'root',
+      password: databasePassword
     });
+    
+    // var dataSourceConfig = new juggler.DataSource({
+    //   name: "db",
+    //   connector: "memory"
+    // });
     
     this.dataSource(dataSourceConfig);
 
