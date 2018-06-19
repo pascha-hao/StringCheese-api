@@ -5,7 +5,7 @@
   "keywords": [
     "loopback-application",
     "loopback"
-  ],
+  ],  
   "main": "index.js",
   "engines": {
     "node": ">=8"
