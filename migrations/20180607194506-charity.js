@@ -40,8 +40,8 @@ exports.up = function(db, callback) {
   
 };
 
-exports.down = function(db) {
-  db.dropTable('charity')
+exports.down = function(db, callback) {
+  db.dropTable('charity', callback)
 };
 
 exports._meta = {
