@@ -19,7 +19,7 @@
             "ENV": "DATABASE_NAME"
         }
     }, 
-
+  
     "pascha": {
         "driver": "mysql",
         "host": "localhost",
