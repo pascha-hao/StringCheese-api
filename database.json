@@ -18,7 +18,7 @@
         "database": {
             "ENV": "DATABASE_NAME"
         }
-    },
+    }, 
 
     "pascha": {
         "driver": "mysql",
