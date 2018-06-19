@@ -35,7 +35,7 @@
     "migrateDownP": "NODE_ENV=pascha DATABASE_PASSWORD=root1234 db-migrate down",
     "eliza": "NODE_ENV=eliza DATABASE_PASSWORD=password npm run migrateUp",
     "pascha": "NODE_ENV=pascha DATABASE_PASSWORD=root1234 npm run migrateUp",
-    "tom": "NODE_ENV=tom DATABASE_HOST=localhost DATABASE_NAME=StringCheese DATABASE_USER=ix_fs_1 DATABASE_PASSWORD=ixperience2018 db-migrate up && npm start"
+    "tom": "NODE_ENV=tom DATABASE_HOST=localhost DATABASE_NAME=StringCheese DATABASE_USER=root DATABASE_PASSWORD=root1234 db-migrate up && npm start"
   },
   "repository": {
     "type": "git"

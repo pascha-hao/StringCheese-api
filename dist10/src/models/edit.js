@@ -27,7 +27,9 @@ __decorate([
     __metadata("design:type", String)
 ], Edit.prototype, "email", void 0);
 Edit = __decorate([
-    repository_1.model()
+    repository_1.model({
+        name: "edit"
+    })
 ], Edit);
 exports.Edit = Edit;
 //# sourceMappingURL=edit.js.map

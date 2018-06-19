@@ -42,7 +42,9 @@ __decorate([
     __metadata("design:type", String)
 ], Post.prototype, "postimg", void 0);
 Post = __decorate([
-    repository_1.model()
+    repository_1.model({
+        name: "post"
+    })
 ], Post);
 exports.Post = Post;
 //# sourceMappingURL=post.js.map

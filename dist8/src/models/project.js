@@ -48,7 +48,9 @@ __decorate([
     __metadata("design:type", String)
 ], Project.prototype, "projectimg", void 0);
 Project = __decorate([
-    repository_1.model()
+    repository_1.model({
+        name: "project"
+    })
 ], Project);
 exports.Project = Project;
 //# sourceMappingURL=project.js.map

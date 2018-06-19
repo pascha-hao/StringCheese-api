@@ -60,7 +60,9 @@ __decorate([
     __metadata("design:type", String)
 ], Address.prototype, "phoneNum", void 0);
 Address = __decorate([
-    repository_1.model()
+    repository_1.model({
+        name: "address"
+    })
 ], Address);
 exports.Address = Address;
 //# sourceMappingURL=address.js.map

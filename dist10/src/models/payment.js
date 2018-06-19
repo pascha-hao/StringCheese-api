@@ -67,7 +67,9 @@ __decorate([
     __metadata("design:type", Number)
 ], Payment.prototype, "address_id", void 0);
 Payment = __decorate([
-    repository_1.model()
+    repository_1.model({
+        name: "payment"
+    })
 ], Payment);
 exports.Payment = Payment;
 //# sourceMappingURL=payment.js.map
