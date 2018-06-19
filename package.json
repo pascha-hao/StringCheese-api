@@ -31,7 +31,7 @@
     "prestart": "npm run build:current",
     "start": "node .",
     "prepublishOnly": "npm run test",
-    "live": "NODE_ENV=live DATABASE_HOST=ix-fs-1.ce5d5ftkvwyr.eu-west-1.rds.amazonaws.com DATABASE_NAME=StringCheese DATABASE_USER=ix_fs_1 DATABASE_PASSWORD=ixperience2018 db-migrate up && node .",
+    "live": "db-migrate up && node .",
     "migrateDownP": "NODE_ENV=pascha DATABASE_PASSWORD=root1234 db-migrate down",
     "eliza": "NODE_ENV=eliza DATABASE_PASSWORD=password npm run migrateUp",
     "pascha": "NODE_ENV=pascha DATABASE_PASSWORD=root1234 npm run migrateUp",
