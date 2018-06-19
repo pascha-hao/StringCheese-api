@@ -50,6 +50,7 @@ let UserController = class UserController {
                     user: {
                         id: user.id,
                         firstname: user.firstname,
+                        lastname: user.lastname,
                         email: user.email
                     },
                     anything: "hello"
