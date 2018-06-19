@@ -20,10 +20,10 @@ export class UserController {
     @repository(DonationRepository.name) private donationRepo: DonationRepository
   ) {}
 
-  // @post('/users')
-  // async register(@requestBody() user: User) {
-  //   return await this.userRepo.create(user);
-  // }
+  @post('/users')
+  async register(@requestBody() user: User) {
+    return await this.userRepo.create(user);
+  }
 
   @get('/users')
   async getAllUsers(): Promise<Array<User>> {
