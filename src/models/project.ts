@@ -1,7 +1,9 @@
 import {Entity, property, model} from '@loopback/repository';
 import { NOTINITIALIZED } from 'dns';
 
-@model()
+@model({
+  name: "project"
+})
 export class Project extends Entity {
   @property({
     type: 'number',
