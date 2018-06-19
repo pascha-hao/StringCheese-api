@@ -11,6 +11,7 @@ export declare class UserController {
     private charityRepo;
     private donationRepo;
     constructor(userRepo: UserRepository, charityRepo: CharityRepository, donationRepo: DonationRepository);
+    register(user: User): Promise<User>;
     getAllUsers(): Promise<Array<User>>;
     login(login: Login): Promise<any>;
     findUsersById(id: number): Promise<User>;
