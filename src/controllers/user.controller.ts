@@ -131,8 +131,19 @@ export class UserController {
     userToStore.email = user.email;
     userToStore.password = hashedPassword;
 
+    let userExists: boolean = !!(await this.userRepo.count({ email: user.email }));
+    if (userExists) {
+      throw new HttpErrors.BadRequest("Email already Exists");
+    }
+
+    let usernameTaken: boolean = !!(await this.userRepo.count({ username: user.username }));
+    if (usernameTaken) {
+      throw new HttpErrors.BadRequest("Username Taken");
+    }
+
     let storedUser = await this.userRepo.create(userToStore);
     storedUser.password = "";
+
 
     var jwt = sign(
       {

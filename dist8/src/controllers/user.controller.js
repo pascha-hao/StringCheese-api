@@ -112,6 +112,14 @@ let UserController = class UserController {
         userToStore.lastname = user.lastname;
         userToStore.email = user.email;
         userToStore.password = hashedPassword;
+        let userExists = !!(await this.userRepo.count({ email: user.email }));
+        if (userExists) {
+            throw new rest_1.HttpErrors.BadRequest("Email already Exists");
+        }
+        let usernameTaken = !!(await this.userRepo.count({ username: user.username }));
+        if (usernameTaken) {
+            throw new rest_1.HttpErrors.BadRequest("Username Taken");
+        }
         let storedUser = await this.userRepo.create(userToStore);
         storedUser.password = "";
         var jwt = jsonwebtoken_1.sign({
