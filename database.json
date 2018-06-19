@@ -5,7 +5,9 @@
 
     "live": {
         "driver": "mysql",
-        "host": { "ENV": "DATABASE_HOST" },
+        "host": { 
+            "ENV": "DATABASE_HOST" 
+        },
         "port": "3306",
         "user": {
             "ENV": "DATABASE_USER"
