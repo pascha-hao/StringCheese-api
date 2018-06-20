@@ -10,53 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let Payment = class Payment extends repository_1.Entity {
-    getPaymentMethodId() {
-        return this.id;
-    }
+let StripeToken = class StripeToken extends repository_1.Entity {
 };
 __decorate([
     repository_1.property({
-        type: 'number',
-        id: true
+        type: 'string',
+        required: true
     }),
-    __metadata("design:type", Number)
-], Payment.prototype, "id", void 0);
+    __metadata("design:type", String)
+], StripeToken.prototype, "id", void 0);
 __decorate([
     repository_1.property({
         type: 'number',
-        id: true
+        required: true
     }),
     __metadata("design:type", Number)
-], Payment.prototype, "address_id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "cardNumber", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "cardMonth", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "cardYear", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-    }),
-    __metadata("design:type", Number)
-], Payment.prototype, "cardCVV", void 0);
-Payment = __decorate([
+], StripeToken.prototype, "amount", void 0);
+StripeToken = __decorate([
     repository_1.model({
-        name: "payment"
+        name: "stripetoken"
     })
-], Payment);
-exports.Payment = Payment;
-//# sourceMappingURL=payment.js.map
+], StripeToken);
+exports.StripeToken = StripeToken;
+//# sourceMappingURL=stripetoken.js.map

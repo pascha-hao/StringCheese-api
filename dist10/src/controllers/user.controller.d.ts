@@ -23,9 +23,9 @@ export declare class UserController {
     editUser(edit: Edit): Promise<{
         token: string;
     }>;
-    payment(pay: PaymentMethod): Promise<void>;
+    createDonation(donation: Donation): Promise<void>;
+    payment(pay: Payment): Promise<void>;
     loginWithQuery(login: Login): Promise<User>;
     updateUserById(id: number, user: User): Promise<boolean>;
-    getDonationsbyUserId(user_id: number, donation: Donation): Promise<Array<Donation>>;
-    getAllDonations(donation: Donation): Promise<Array<Donation>>;
+    getDonationsbyUserId(jwt: string): Promise<Array<Donation>>;
 }
