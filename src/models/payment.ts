@@ -13,40 +13,29 @@ export class Payment extends Entity {
 
     @property({
         type: 'number',
+        id: true
+    })
+    address_id: number;
+
+    @property({
+        type: 'number',
     })
     cardNumber: number;
 
     @property({
         type: 'number',
-        id: true
     })
-    user_id: number;
-
-    @property({
-        type: 'string',
-    })
-    cardHolderName: string;
-
-    @property({
-        type: 'string',
-    })
-    CVV: string;
-
-    @property({
-        type: 'string',
-    })
-    cardType: string;
-
-    @property({
-        type: 'string',
-    })
-    expirationDate: string;
+    cardMonth: number;
 
     @property({
         type: 'number',
-        id: true
     })
-    address_id: number;
+    cardYear: number;
+
+    @property({
+        type: 'number',
+    })
+    cardCVV: number ;
 
     getPaymentMethodId() {
         return this.id;
