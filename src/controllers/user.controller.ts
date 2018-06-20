@@ -3,7 +3,7 @@ import { UserRepository } from "../repositories/user.repository";
 import { post, get, patch, del, requestBody, HttpErrors, param } from "@loopback/rest";
 import { User } from "../models/user";
 import { Login } from "../models/login";
-import { Payment } from "../models/payment";
+import { PaymentMethod } from "../models/payment-methods";
 import { Donation } from "../models/donation";
 import { sign, verify } from'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
@@ -11,6 +11,8 @@ import { CharityRepository } from "../repositories/charity.repository";
 import { DonationRepository } from "../repositories/donation.repository";
 
 import { Edit } from "../models/edit";
+
+
 
 export class UserController {
 
@@ -182,7 +184,7 @@ export class UserController {
   }
 
   @post('/payment-methods')
-  async payment(@requestBody() pay: Payment) {
+  async payment(@requestBody() pay: PaymentMethod) {
     // Check that credit card info is supplied
     if (!pay.ccnum || !pay.exp || !pay.cvc || !pay.userID) {
       throw new HttpErrors.Unauthorized('invalid credentials');

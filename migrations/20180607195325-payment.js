@@ -1,3 +1,4 @@
+
 'use strict';
 
 var dbm;
@@ -14,37 +15,64 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function(db, callback) {
-  db.createTable('payment', {
+exports.up = function(db, done) {
+  db.createTable('payment-methods', {
     id: {
-      type: 'int', 
-      primaryKey: true 
-    }, 
-    user_id: {
-      type: 'int'
-    },
-    address_id: {
-      type: 'int'
-    },
-    card_number: {
-      type: 'int'
-    },
-    expiration_date: {
-      type: 'int'
-    },
-    bank: {
-      type: 'string',
-      length: 40
-    },
-    CVV: {
       type: 'int',
-    }
-  }, callback);
+      primaryKey: 'true',
+      autoIncrement: 'true'
+    },
+
+    cardholder: {
+      type: 'string',
+      notNull: true,
+    },
   
+    paymenttoken: {
+      type: 'string',
+      length: 2048
+    },
+
+    amount: {
+      type: 'decimal',
+      notNull: 'true',
+      length: '10, 2'
+    },
+
+    curency: {
+      type: 'string',
+      legnth: 3,
+    },
+
+    userID: {
+      type: 'int',
+      notNull: true,
+      foreignKey: {
+        name: 'userIDPaymentMethodsFk',
+        table: 'user',
+        rules: {
+          onDelete: 'CASCADE',
+          onUpdate: 'RESTRICT'
+        },
+        mapping: 'id'
+      }
+    },
+
+    date: {
+      type: 'string',
+      legnth: 200,
+    },
+
+    time: {
+      type: 'string',
+      legnth: 200,
+    },
+
+  }, done );
 };
 
-exports.down = function(db, callback) {
-  db.dropTable('payment', callback)
+exports.down = function(db, done) {
+  db.dropTable('payment-methods', done)
 };
 
 exports._meta = {
