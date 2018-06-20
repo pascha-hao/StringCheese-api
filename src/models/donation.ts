@@ -22,16 +22,22 @@ export class Donation extends Entity {
     charity_id: number;
 
     @property({
+        type: 'string',
+        required: true
+    })
+    charity_name: string;
+
+    @property({
         type: 'number',
         required: true
     })
     amount: number;
 
-    @property({
-        type: 'string',
-        required: true
-    })
-    date: string;
+    //  @property({
+    //      type: 'string',
+    //      required: true
+    //     })
+    //  date: string;
 
     getDonationId() {
         return this.id;

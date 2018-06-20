@@ -139,6 +139,19 @@ let UserController = class UserController {
             token: jwt,
         };
     }
+    async createDonation(donation) {
+        console.log(donation.charity_id);
+        console.log(donation.user_id);
+        console.log(donation.amount);
+        console.log(donation.charity_name);
+        //console.log(donation.donate_date);
+        var donationToStore = new donation_1.Donation();
+        donationToStore.charity_id = donation.charity_id;
+        donationToStore.user_id = donation.user_id;
+        donationToStore.amount = donation.amount;
+        donationToStore.charity_name = donation.charity_name;
+        this.donationRepo.create(donationToStore);
+    }
     async payment(pay) {
         // Check that credit card info is supplied
         if (!pay.ccnum || !pay.exp || !pay.cvc || !pay.userID) {
@@ -168,11 +181,14 @@ let UserController = class UserController {
         id = +id;
         return await this.userRepo.updateById(id, user);
     }
-    async getDonationsbyUserId(user_id, donation) {
-        return await this.donationRepo.find({ where: { user_id: user_id } });
-    }
-    async getAllDonations(donation) {
-        return await this.donationRepo.find();
+    async getDonationsbyUserId(jwt) {
+        try {
+            let jwtBody = jsonwebtoken_1.verify(jwt, 'shh');
+            return await this.donationRepo.find({ where: { user_id: jwtBody.user.id } });
+        }
+        catch (err) {
+            throw new rest_1.HttpErrors.Unauthorized();
+        }
     }
 };
 __decorate([
@@ -231,6 +247,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "editUser", null);
 __decorate([
+    rest_1.post('/donation'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [donation_1.Donation]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "createDonation", null);
+__decorate([
     rest_1.post('/payment-methods'),
     __param(0, rest_1.requestBody()),
     __metadata("design:type", Function),
@@ -253,20 +276,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUserById", null);
 __decorate([
-    rest_1.get('/users/{user_id}/donations'),
-    __param(0, rest_1.param.path.number('user_id')),
-    __param(1, rest_1.requestBody()),
+    rest_1.get('/donations'),
+    __param(0, rest_1.param.query.string('jwt')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, donation_1.Donation]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getDonationsbyUserId", null);
-__decorate([
-    rest_1.get('/donations'),
-    __param(0, rest_1.requestBody()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [donation_1.Donation]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "getAllDonations", null);
 UserController = __decorate([
     __param(0, repository_1.repository(user_repository_1.UserRepository.name)),
     __param(1, repository_1.repository(charity_repository_1.CharityRepository.name)),
