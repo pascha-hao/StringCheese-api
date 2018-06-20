@@ -3,7 +3,7 @@ import { Donation } from './donation';
 
 @model({
   name: "user"
-})
+}) 
 export class User extends Entity {
   @property({
     type: 'number',
