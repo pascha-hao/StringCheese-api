@@ -15,7 +15,7 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('User', {
+  db.createTable('user', {
     id: {
       type: 'int', 
       primaryKey: true,
@@ -42,7 +42,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function (db, callback) {
-  db.dropTable('User', callback)
+  db.dropTable('user', callback)
 };
 
 exports._meta = {
