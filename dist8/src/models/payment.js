@@ -25,47 +25,34 @@ __decorate([
 __decorate([
     repository_1.property({
         type: 'number',
+        id: true
+    }),
+    __metadata("design:type", Number)
+], Payment.prototype, "address_id", void 0);
+__decorate([
+    repository_1.property({
+        type: 'number',
     }),
     __metadata("design:type", Number)
 ], Payment.prototype, "cardNumber", void 0);
 __decorate([
     repository_1.property({
         type: 'number',
-        id: true
     }),
     __metadata("design:type", Number)
-], Payment.prototype, "user_id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-    }),
-    __metadata("design:type", String)
-], Payment.prototype, "cardHolderName", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-    }),
-    __metadata("design:type", String)
-], Payment.prototype, "CVV", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-    }),
-    __metadata("design:type", String)
-], Payment.prototype, "cardType", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-    }),
-    __metadata("design:type", String)
-], Payment.prototype, "expirationDate", void 0);
+], Payment.prototype, "cardMonth", void 0);
 __decorate([
     repository_1.property({
         type: 'number',
-        id: true
     }),
     __metadata("design:type", Number)
-], Payment.prototype, "address_id", void 0);
+], Payment.prototype, "cardYear", void 0);
+__decorate([
+    repository_1.property({
+        type: 'number',
+    }),
+    __metadata("design:type", Number)
+], Payment.prototype, "cardCVV", void 0);
 Payment = __decorate([
     repository_1.model({
         name: "payment"

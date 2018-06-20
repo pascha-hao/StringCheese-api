@@ -181,6 +181,24 @@ export class UserController {
     };
   }
 
+  @post('/donation')
+  async createDonation(@requestBody() donation: Donation) {
+    console.log(donation.charity_id);
+    console.log(donation.user_id);
+    console.log(donation.amount);
+    console.log(donation.charity_name);
+    //console.log(donation.donate_date);
+    var donationToStore = new Donation();
+    donationToStore.charity_id = donation.charity_id;
+    donationToStore.user_id = donation.user_id;
+    donationToStore.amount = donation.amount;
+    donationToStore.charity_name = donation.charity_name;
+
+    this.donationRepo.create(donationToStore);
+
+  }
+
+
   @post('/payment-methods')
   async payment(@requestBody() pay: Payment) {
     // Check that credit card info is supplied
@@ -221,17 +239,21 @@ export class UserController {
     return await this.userRepo.updateById(id, user);
   }
 
-  @get('/users/{user_id}/donations')
-  async getDonationsbyUserId(@param.path.number('user_id') user_id: number,
-  @requestBody() donation: Donation): Promise<Array<Donation>> {
-
-    return await this.donationRepo.find({where: {user_id: user_id}})
-  }
-
   @get('/donations')
-  async getAllDonations(@requestBody() donation: Donation): Promise<Array<Donation>> {
-    return await this.donationRepo.find();
+  async getDonationsbyUserId(
+  @param.query.string('jwt') jwt: string): Promise<Array<Donation>> {
+
+    try {
+      let jwtBody = verify(jwt, 'shh') as any;
+      return await this.donationRepo.find({where: {user_id: jwtBody.user.id}});
+    } catch (err) {
+      throw new HttpErrors.Unauthorized();
+    }
   }
 
+  // @get('/donations')
+  // async getAllDonations(@requestBody() donation: Donation): Promise<Array<Donation>> {
+  //   return await this.donationRepo.find();
+  // }
 
 }

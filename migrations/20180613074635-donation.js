@@ -18,10 +18,14 @@ exports.up = function(db, callback) {
   db.createTable('donation', {
     id: {
       type: 'int', 
-      primaryKey: true 
+      primaryKey: true,
+      autoIncrement: true
     },
     charity_id: {
       type: 'int'
+    },
+    charity_name: {
+      type: 'string'
     },
     user_id: {
       type: 'int'
@@ -32,6 +36,7 @@ exports.up = function(db, callback) {
   }, callback);
   
 };
+
 
 exports.down = function(db, callback) {
   db.dropTable('donation', callback)
