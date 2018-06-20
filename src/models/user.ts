@@ -9,7 +9,7 @@ export class User extends Entity {
     id: true
   })
   id?: number;
-
+ 
   @property({
     type: 'string',
     required: true
