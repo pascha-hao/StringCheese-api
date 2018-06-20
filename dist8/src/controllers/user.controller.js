@@ -116,10 +116,6 @@ let UserController = class UserController {
         if (userExists) {
             throw new rest_1.HttpErrors.BadRequest("Email already Exists");
         }
-        let usernameTaken = !!(await this.userRepo.count({ username: user.username }));
-        if (usernameTaken) {
-            throw new rest_1.HttpErrors.BadRequest("Username Taken");
-        }
         let storedUser = await this.userRepo.create(userToStore);
         storedUser.password = "";
         var jwt = jsonwebtoken_1.sign({

@@ -136,11 +136,6 @@ export class UserController {
       throw new HttpErrors.BadRequest("Email already Exists");
     }
 
-    let usernameTaken: boolean = !!(await this.userRepo.count({ username: user.username }));
-    if (usernameTaken) {
-      throw new HttpErrors.BadRequest("Username Taken");
-    }
-
     let storedUser = await this.userRepo.create(userToStore);
     storedUser.password = "";
 
