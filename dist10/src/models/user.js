@@ -52,7 +52,7 @@ __decorate([
 ], User.prototype, "password", void 0);
 User = __decorate([
     repository_1.model({
-        name: "user"
+        name: "User"
     })
 ], User);
 exports.User = User;
