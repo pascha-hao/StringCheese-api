@@ -24,7 +24,7 @@ export class PaymentMethodsController {
       //     throw new HttpErrors.BadRequest('Missing required data');
       // }
 
-      var stripe = require("stripe")("pk_test_Wr8cGPVS6aiNLEsuYVi0G1wm");
+      var stripe = require("stripe")("sk_test_BUWCNjhO7iXFKaTg9YkPEjSH");
 
       // Token is created using Checkout or Elements!
       // Get the payment token ID submitted by the form:
