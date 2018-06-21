@@ -23,7 +23,6 @@ const jsonwebtoken_1 = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const charity_repository_1 = require("../repositories/charity.repository");
 const donation_repository_1 = require("../repositories/donation.repository");
-const edit_1 = require("../models/edit");
 let UserController = class UserController {
     constructor(userRepo, charityRepo, donationRepo) {
         this.userRepo = userRepo;
@@ -128,20 +127,28 @@ let UserController = class UserController {
             token: jwt,
         };
     }
-    async editUser(edit) {
-        var editToStore = new edit_1.Edit();
-        editToStore.firstname = edit.firstname;
-        editToStore.email = edit.email;
-        let storedEdit = await this.userRepo.create(editToStore);
-        var jwt = jsonwebtoken_1.sign({
-            edit: storedEdit,
-        }, 'shh', {
-            issuer: 'auth.ix.co.za',
-            audience: 'ix.co.za',
-        });
-        return {
-            token: jwt,
-        };
+    async editUser(edit, jwt) {
+        let userId = null;
+        try {
+            userId = jsonwebtoken_1.verify(jwt, 'shh').user.id;
+        }
+        catch (_a) {
+            throw new rest_1.HttpErrors.Unauthorized("Invalid JWT.");
+        }
+        return this.userRepo.updateById(userId, edit);
+        // var jwt = sign(
+        //   {
+        //     edit: storedEdit,
+        //   },
+        //   'shh',
+        //   {
+        //     issuer: 'auth.ix.co.za',
+        //     audience: 'ix.co.za',
+        //   },
+        // );
+        // return {
+        //   token: jwt,
+        // };
     }
     async createDonation(donation) {
         console.log(donation.charity_id);
@@ -258,8 +265,9 @@ __decorate([
 __decorate([
     rest_1.post('/edit'),
     __param(0, rest_1.requestBody()),
+    __param(1, rest_1.param.query.string('jwt')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [edit_1.Edit]),
+    __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "editUser", null);
 __decorate([

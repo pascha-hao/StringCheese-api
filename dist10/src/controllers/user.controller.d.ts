@@ -5,7 +5,6 @@ import { PaymentMethod } from "../models/payment-methods";
 import { Donation } from "../models/donation";
 import { CharityRepository } from "../repositories/charity.repository";
 import { DonationRepository } from "../repositories/donation.repository";
-import { Edit } from "../models/edit";
 export declare class UserController {
     private userRepo;
     private charityRepo;
@@ -20,9 +19,7 @@ export declare class UserController {
     createUser(user: User): Promise<{
         token: string;
     }>;
-    editUser(edit: Edit): Promise<{
-        token: string;
-    }>;
+    editUser(edit: Partial<User>, jwt: string): Promise<boolean>;
     createDonation(donation: Donation): Promise<void>;
     subscribe(donation: Donation): Promise<void>;
     payment(pay: PaymentMethod): Promise<void>;
