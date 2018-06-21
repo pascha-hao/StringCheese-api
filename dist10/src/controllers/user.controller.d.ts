@@ -28,6 +28,7 @@ export declare class UserController {
     createDonation(donation: Donation): Promise<void>;
     subscribe(donation: Donation): Promise<void>;
     favorite(post: Post): Promise<void>;
+    unfavorite(user_id: number, charity_id: number): Promise<boolean>;
     payment(pay: PaymentMethod): Promise<void>;
     loginWithQuery(login: Login): Promise<User>;
     updateUserById(id: number, user: User): Promise<boolean>;

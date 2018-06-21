@@ -242,6 +242,28 @@ export class UserController {
 
   }
 
+  // @post('/unfavorite')
+  // async unfavorite(@requestBody() post: Post) {
+  //   console.log(post.charity_id);
+  //   console.log(post.user_id);
+  //   //console.log(donation.donate_date);
+  //   var postToStore = new Post();
+  //   postToStore.charity_id = post.charity_id;
+  //   postToStore.user_id = post.user_id;
+  //   return await this.userRepo.updateById(userId, unfavorite);
+  //   this.postRepo.destroyById(postToStore);
+
+  // }
+
+  @post('/unfavorite')
+  async unfavorite(
+    @requestBody() user_id: number, charity_id: number) {
+    var tempPost = await this.postRepo.find({where: {and: [{user_id: user_id}, {charity_id: charity_id}]}});
+    if (tempPost.length ==0) throw new HttpErrors.Unauthorized('favorite not found');
+    return await this.postRepo.delete(tempPost[0]);
+  }
+
+
 
   @post('/payment-methods')
   async payment(@requestBody() pay: PaymentMethod) {

@@ -185,6 +185,23 @@ let UserController = class UserController {
         postToStore.user_id = post.user_id;
         this.postRepo.create(postToStore);
     }
+    // @post('/unfavorite')
+    // async unfavorite(@requestBody() post: Post) {
+    //   console.log(post.charity_id);
+    //   console.log(post.user_id);
+    //   //console.log(donation.donate_date);
+    //   var postToStore = new Post();
+    //   postToStore.charity_id = post.charity_id;
+    //   postToStore.user_id = post.user_id;
+    //   return await this.userRepo.updateById(userId, unfavorite);
+    //   this.postRepo.destroyById(postToStore);
+    // }
+    async unfavorite(user_id, charity_id) {
+        var tempPost = await this.postRepo.find({ where: { and: [{ user_id: user_id }, { charity_id: charity_id }] } });
+        if (tempPost.length == 0)
+            throw new rest_1.HttpErrors.Unauthorized('favorite not found');
+        return await this.postRepo.delete(tempPost[0]);
+    }
     async payment(pay) {
         // Check that credit card info is supplied
         if (!pay.ccnum || !pay.exp || !pay.cvc || !pay.userID) {
@@ -301,6 +318,13 @@ __decorate([
     __metadata("design:paramtypes", [post_1.Post]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "favorite", null);
+__decorate([
+    rest_1.post('/unfavorite'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "unfavorite", null);
 __decorate([
     rest_1.post('/payment-methods'),
     __param(0, rest_1.requestBody()),
