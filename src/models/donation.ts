@@ -41,11 +41,11 @@ import {Entity, property, model} from '@loopback/repository';
     })
     is_subscription: boolean;
 
-    //  @property({
-    //      type: 'string',
-    //      required: true
-    //     })
-    //  date: string;
+     @property({
+         type: 'string',
+         required: true
+        })
+     date: string;
 
     getDonationId() {
         return this.id;

@@ -35,6 +35,9 @@ exports.up = function(db, callback) {
     },
     is_subscription: {
       type: 'boolean'
+    },
+    date: {
+      type: 'string'
     }
   }, callback);
   

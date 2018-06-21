@@ -6,5 +6,6 @@ export declare class Donation extends Entity {
     charity_name: string;
     amount: number;
     is_subscription: boolean;
+    date: string;
     getDonationId(): number | undefined;
 }
