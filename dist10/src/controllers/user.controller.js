@@ -186,25 +186,14 @@ let UserController = class UserController {
         postToStore.user_id = post.user_id;
         this.postRepo.create(postToStore);
     }
-    // @post('/unfavorite')
-    // async unfavorite(@requestBody() post: Post) {
-    //   console.log(post.charity_id);
-    //   console.log(post.user_id);
-    //   //console.log(donation.donate_date);
-    //   var postToStore = new Post();
-    //   postToStore.charity_id = post.charity_id;
-    //   postToStore.user_id = post.user_id;
-    //   return await this.userRepo.updateById(userId, unfavorite);
-    //   this.postRepo.destroyById(postToStore);
-    // }
     async unfavorite(unfav) {
         var tempPost = await this.postRepo.find({ where: { and: [{ user_id: unfav.user_id }, { charity_id: unfav.charity_id }] } });
         if (tempPost.length == 0)
             throw new rest_1.HttpErrors.Unauthorized('favorite not found');
         return await this.postRepo.delete(tempPost[0]);
     }
-    async favorites(unfav) {
-        var tempPost = await this.postRepo.find({ where: { and: [{ user_id: unfav.user_id }, { charity_id: unfav.charity_id }] } });
+    async favorites(user_id, charity_id) {
+        var tempPost = await this.postRepo.find({ where: { and: [{ user_id: user_id }, { charity_id: charity_id }] } });
         var exists = (tempPost.length == 0);
         return await (tempPost);
     }
@@ -332,10 +321,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "unfavorite", null);
 __decorate([
-    rest_1.post('/favorites'),
-    __param(0, rest_1.requestBody()),
+    rest_1.get('/favorites'),
+    __param(0, rest_1.param.query.string('user_id')),
+    __param(1, rest_1.param.query.string('charity_id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [unfav_1.Unfav]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "favorites", null);
 __decorate([

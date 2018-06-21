@@ -243,18 +243,6 @@ export class UserController {
 
   }
 
-  // @post('/unfavorite')
-  // async unfavorite(@requestBody() post: Post) {
-  //   console.log(post.charity_id);
-  //   console.log(post.user_id);
-  //   //console.log(donation.donate_date);
-  //   var postToStore = new Post();
-  //   postToStore.charity_id = post.charity_id;
-  //   postToStore.user_id = post.user_id;
-  //   return await this.userRepo.updateById(userId, unfavorite);
-  //   this.postRepo.destroyById(postToStore);
-
-  // }
 
   @post('/unfavorite')
   async unfavorite(
@@ -264,10 +252,11 @@ export class UserController {
     return await this.postRepo.delete(tempPost[0]);
   }
 
-  @post('/favorites')
+  @get('/favorites')
   async favorites(
-    @requestBody() unfav: Unfav) {
-    var tempPost = await this.postRepo.find({where: {and: [{user_id: unfav.user_id}, {charity_id: unfav.charity_id}]}});
+    @param.query.string('user_id') user_id: string,
+    @param.query.string('charity_id') charity_id: string) {
+    var tempPost = await this.postRepo.find({where: {and: [{user_id: user_id}, {charity_id: charity_id}]}});
     var exists = (tempPost.length ==0);
     return await (tempPost);
   }
