@@ -5,13 +5,16 @@
 
 import { repository } from "@loopback/repository";
 import { CharityRepository } from "../repositories/charity.repository";
+import { ProjectRepository } from "../repositories/project.repository";
 import { post, get, requestBody, HttpErrors, param } from "@loopback/rest";
 import { Charity } from "../models/charity";
+import { Project } from "../models/project";
 
 export class CharityController {
 
   constructor(
-    @repository(CharityRepository.name) private charityRepo: CharityRepository
+    @repository(CharityRepository.name) private charityRepo: CharityRepository,
+    @repository(ProjectRepository.name) private projectRepo: ProjectRepository
   ) { }
 
   @post('/charities')
@@ -43,6 +46,11 @@ export class CharityController {
     }
 
     return await this.charityRepo.findById(id);
+  }
+
+  @get('/projects')
+  async getAllProjects(): Promise<Array<Project>> {
+    return await this.projectRepo.find();
   }
 
 
