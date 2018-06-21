@@ -158,6 +158,7 @@ let UserController = class UserController {
         donationToStore.amount = donation.amount;
         donationToStore.charity_name = donation.charity_name;
         donationToStore.is_subscription = false;
+        donationToStore.date = donation.date;
         this.donationRepo.create(donationToStore);
     }
     async subscribe(donation) {
@@ -169,6 +170,7 @@ let UserController = class UserController {
         donationToStore.amount = donation.amount;
         donationToStore.charity_name = donation.charity_name;
         donationToStore.is_subscription = true;
+        donationToStore.date = donation.date;
         this.donationRepo.create(donationToStore);
     }
     async payment(pay) {
