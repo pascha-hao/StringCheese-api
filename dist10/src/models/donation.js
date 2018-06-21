@@ -55,6 +55,13 @@ __decorate([
     }),
     __metadata("design:type", Number)
 ], Donation.prototype, "amount", void 0);
+__decorate([
+    repository_1.property({
+        type: 'boolean',
+        required: true
+    }),
+    __metadata("design:type", Boolean)
+], Donation.prototype, "is_subscription", void 0);
 Donation = __decorate([
     repository_1.model({
         name: "donation"

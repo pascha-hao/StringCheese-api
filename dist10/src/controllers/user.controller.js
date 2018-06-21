@@ -154,6 +154,18 @@ let UserController = class UserController {
         donationToStore.user_id = donation.user_id;
         donationToStore.amount = donation.amount;
         donationToStore.charity_name = donation.charity_name;
+        donationToStore.is_subscription = false;
+        this.donationRepo.create(donationToStore);
+    }
+    async subscribe(donation) {
+        //console.log(donation.is_subscription);
+        //console.log(donation.donate_date);
+        var donationToStore = new donation_1.Donation();
+        donationToStore.charity_id = donation.charity_id;
+        donationToStore.user_id = donation.user_id;
+        donationToStore.amount = donation.amount;
+        donationToStore.charity_name = donation.charity_name;
+        donationToStore.is_subscription = true;
         this.donationRepo.create(donationToStore);
     }
     async payment(pay) {
@@ -257,6 +269,13 @@ __decorate([
     __metadata("design:paramtypes", [donation_1.Donation]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "createDonation", null);
+__decorate([
+    rest_1.post('/subscribe'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [donation_1.Donation]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "subscribe", null);
 __decorate([
     rest_1.post('/payment-methods'),
     __param(0, rest_1.requestBody()),
