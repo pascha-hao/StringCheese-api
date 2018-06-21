@@ -173,22 +173,22 @@ export class UserController {
 
     
 
-    return this.userRepo.updateById(userId, edit);
+    await this.userRepo.updateById(userId, edit);
 
-    // var jwt = sign(
-    //   {
-    //     edit: storedEdit,
-    //   },
-    //   'shh',
-    //   {
-    //     issuer: 'auth.ix.co.za',
-    //     audience: 'ix.co.za',
-    //   },
-    // );
+    var jwt = sign(
+      {
+        user: await this.userRepo.findById(userId),
+      },
+      'shh',
+      {
+        issuer: 'auth.ix.co.za',
+        audience: 'ix.co.za',
+      },
+    );
 
-    // return {
-    //   token: jwt,
-    // };
+    return {
+      token: jwt,
+    };
   }
 
   @post('/donation')
