@@ -135,20 +135,16 @@ let UserController = class UserController {
         catch (_a) {
             throw new rest_1.HttpErrors.Unauthorized("Invalid JWT.");
         }
-        return this.userRepo.updateById(userId, edit);
-        // var jwt = sign(
-        //   {
-        //     edit: storedEdit,
-        //   },
-        //   'shh',
-        //   {
-        //     issuer: 'auth.ix.co.za',
-        //     audience: 'ix.co.za',
-        //   },
-        // );
-        // return {
-        //   token: jwt,
-        // };
+        await this.userRepo.updateById(userId, edit);
+        var jwt = jsonwebtoken_1.sign({
+            user: await this.userRepo.findById(userId),
+        }, 'shh', {
+            issuer: 'auth.ix.co.za',
+            audience: 'ix.co.za',
+        });
+        return {
+            token: jwt,
+        };
     }
     async createDonation(donation) {
         console.log(donation.charity_id);

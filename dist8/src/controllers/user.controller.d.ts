@@ -19,7 +19,9 @@ export declare class UserController {
     createUser(user: User): Promise<{
         token: string;
     }>;
-    editUser(edit: Partial<User>, jwt: string): Promise<boolean>;
+    editUser(edit: Partial<User>, jwt: string): Promise<{
+        token: string;
+    }>;
     createDonation(donation: Donation): Promise<void>;
     subscribe(donation: Donation): Promise<void>;
     payment(pay: PaymentMethod): Promise<void>;
