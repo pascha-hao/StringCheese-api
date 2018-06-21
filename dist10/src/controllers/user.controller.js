@@ -17,6 +17,7 @@ const user_repository_1 = require("../repositories/user.repository");
 const rest_1 = require("@loopback/rest");
 const user_1 = require("../models/user");
 const login_1 = require("../models/login");
+const unfav_1 = require("../models/unfav");
 const post_1 = require("../models/post");
 const payment_methods_1 = require("../models/payment-methods");
 const donation_1 = require("../models/donation");
@@ -196,8 +197,8 @@ let UserController = class UserController {
     //   return await this.userRepo.updateById(userId, unfavorite);
     //   this.postRepo.destroyById(postToStore);
     // }
-    async unfavorite(user_id, charity_id) {
-        var tempPost = await this.postRepo.find({ where: { and: [{ user_id: user_id }, { charity_id: charity_id }] } });
+    async unfavorite(unfav) {
+        var tempPost = await this.postRepo.find({ where: { and: [{ user_id: unfav.user_id }, { charity_id: unfav.charity_id }] } });
         if (tempPost.length == 0)
             throw new rest_1.HttpErrors.Unauthorized('favorite not found');
         return await this.postRepo.delete(tempPost[0]);
@@ -322,7 +323,7 @@ __decorate([
     rest_1.post('/unfavorite'),
     __param(0, rest_1.requestBody()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:paramtypes", [unfav_1.Unfav]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "unfavorite", null);
 __decorate([

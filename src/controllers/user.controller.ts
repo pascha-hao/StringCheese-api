@@ -3,6 +3,7 @@ import { UserRepository } from "../repositories/user.repository";
 import { post, get, patch, del, requestBody, HttpErrors, param } from "@loopback/rest";
 import { User } from "../models/user";
 import { Login } from "../models/login";
+import { Unfav } from "../models/unfav";
 import { Post } from "../models/post";
 import { PaymentMethod } from "../models/payment-methods";
 import { Donation } from "../models/donation";
@@ -257,8 +258,8 @@ export class UserController {
 
   @post('/unfavorite')
   async unfavorite(
-    @requestBody() user_id: number, charity_id: number) {
-    var tempPost = await this.postRepo.find({where: {and: [{user_id: user_id}, {charity_id: charity_id}]}});
+    @requestBody() unfav: Unfav) {
+    var tempPost = await this.postRepo.find({where: {and: [{user_id: unfav.user_id}, {charity_id: unfav.charity_id}]}});
     if (tempPost.length ==0) throw new HttpErrors.Unauthorized('favorite not found');
     return await this.postRepo.delete(tempPost[0]);
   }

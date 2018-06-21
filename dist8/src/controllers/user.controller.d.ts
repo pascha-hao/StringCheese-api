@@ -1,6 +1,7 @@
 import { UserRepository } from "../repositories/user.repository";
 import { User } from "../models/user";
 import { Login } from "../models/login";
+import { Unfav } from "../models/unfav";
 import { Post } from "../models/post";
 import { PaymentMethod } from "../models/payment-methods";
 import { Donation } from "../models/donation";
@@ -28,7 +29,7 @@ export declare class UserController {
     createDonation(donation: Donation): Promise<void>;
     subscribe(donation: Donation): Promise<void>;
     favorite(post: Post): Promise<void>;
-    unfavorite(user_id: number, charity_id: number): Promise<boolean>;
+    unfavorite(unfav: Unfav): Promise<boolean>;
     payment(pay: PaymentMethod): Promise<void>;
     loginWithQuery(login: Login): Promise<User>;
     updateUserById(id: number, user: User): Promise<boolean>;
