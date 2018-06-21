@@ -16,11 +16,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import {inject} from @loopback/context;
 const repository_1 = require("@loopback/repository");
 const charity_repository_1 = require("../repositories/charity.repository");
+const project_repository_1 = require("../repositories/project.repository");
 const rest_1 = require("@loopback/rest");
 const charity_1 = require("../models/charity");
 let CharityController = class CharityController {
-    constructor(charityRepo) {
+    constructor(charityRepo, projectRepo) {
         this.charityRepo = charityRepo;
+        this.projectRepo = projectRepo;
     }
     async register(charity) {
         if (!charity.name) {
@@ -43,6 +45,9 @@ let CharityController = class CharityController {
         }
         return await this.charityRepo.findById(id);
     }
+    async getAllProjects() {
+        return await this.projectRepo.find();
+    }
 };
 __decorate([
     rest_1.post('/charities'),
@@ -64,9 +69,17 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], CharityController.prototype, "findCharitiesById", null);
+__decorate([
+    rest_1.get('/projects'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], CharityController.prototype, "getAllProjects", null);
 CharityController = __decorate([
     __param(0, repository_1.repository(charity_repository_1.CharityRepository.name)),
-    __metadata("design:paramtypes", [charity_repository_1.CharityRepository])
+    __param(1, repository_1.repository(project_repository_1.ProjectRepository.name)),
+    __metadata("design:paramtypes", [charity_repository_1.CharityRepository,
+        project_repository_1.ProjectRepository])
 ], CharityController);
 exports.CharityController = CharityController;
 //# sourceMappingURL=charity.controller.js.map
