@@ -1,7 +1,7 @@
 import { UserRepository } from "../repositories/user.repository";
 import { User } from "../models/user";
 import { Login } from "../models/login";
-import { Payment } from "../models/payment";
+import { PaymentMethod } from "../models/payment-methods";
 import { Donation } from "../models/donation";
 import { CharityRepository } from "../repositories/charity.repository";
 import { DonationRepository } from "../repositories/donation.repository";
@@ -24,7 +24,8 @@ export declare class UserController {
         token: string;
     }>;
     createDonation(donation: Donation): Promise<void>;
-    payment(pay: Payment): Promise<void>;
+    subscribe(donation: Donation): Promise<void>;
+    payment(pay: PaymentMethod): Promise<void>;
     loginWithQuery(login: Login): Promise<User>;
     updateUserById(id: number, user: User): Promise<boolean>;
     getDonationsbyUserId(jwt: string): Promise<Array<Donation>>;

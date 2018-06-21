@@ -10,13 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let Donation = class Donation extends repository_1.Entity {
-    //  @property({
-    //      type: 'string',
-    //      required: true
-    //     })
-    //  date: string;
-    getDonationId() {
+let PaymentMethod = class PaymentMethod extends repository_1.Entity {
+    getId() {
         return this.id;
     }
 };
@@ -26,46 +21,52 @@ __decorate([
         id: true
     }),
     __metadata("design:type", Number)
-], Donation.prototype, "id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Donation.prototype, "user_id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Donation.prototype, "charity_id", void 0);
+], PaymentMethod.prototype, "id", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
         required: true
     }),
     __metadata("design:type", String)
-], Donation.prototype, "charity_name", void 0);
+], PaymentMethod.prototype, "cardholder", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+        required: true
+    }),
+    __metadata("design:type", String)
+], PaymentMethod.prototype, "paymenttoken", void 0);
 __decorate([
     repository_1.property({
         type: 'number',
         required: true
     }),
     __metadata("design:type", Number)
-], Donation.prototype, "amount", void 0);
+], PaymentMethod.prototype, "amount", void 0);
 __decorate([
     repository_1.property({
-        type: 'boolean',
+        type: 'string',
         required: true
     }),
-    __metadata("design:type", Boolean)
-], Donation.prototype, "is_subscription", void 0);
-Donation = __decorate([
+    __metadata("design:type", String)
+], PaymentMethod.prototype, "curency", void 0);
+__decorate([
+    repository_1.property({
+        type: 'number',
+        id: true
+    }),
+    __metadata("design:type", Number)
+], PaymentMethod.prototype, "userID", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string'
+    }),
+    __metadata("design:type", Date)
+], PaymentMethod.prototype, "date", void 0);
+PaymentMethod = __decorate([
     repository_1.model({
-        name: "donation"
+        name: "payment-methods"
     })
-], Donation);
-exports.Donation = Donation;
-//# sourceMappingURL=donation.js.map
+], PaymentMethod);
+exports.PaymentMethod = PaymentMethod;
+//# sourceMappingURL=payment-methods.js.map

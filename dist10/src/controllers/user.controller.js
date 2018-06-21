@@ -17,7 +17,7 @@ const user_repository_1 = require("../repositories/user.repository");
 const rest_1 = require("@loopback/rest");
 const user_1 = require("../models/user");
 const login_1 = require("../models/login");
-const payment_1 = require("../models/payment");
+const payment_methods_1 = require("../models/payment-methods");
 const donation_1 = require("../models/donation");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -261,7 +261,7 @@ __decorate([
     rest_1.post('/payment-methods'),
     __param(0, rest_1.requestBody()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [payment_1.Payment]),
+    __metadata("design:paramtypes", [payment_methods_1.PaymentMethod]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "payment", null);
 __decorate([
