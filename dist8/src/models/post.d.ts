@@ -1,8 +1,7 @@
 import { Entity } from '@loopback/repository';
 export declare class Post extends Entity {
     id?: number;
-    name: string;
-    description: string;
-    postimg: string;
+    charity_id: number;
+    user_id: number;
     getId(): number | undefined;
 }

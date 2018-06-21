@@ -8,37 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let Post = class Post extends repository_1.Entity {
-    getId() {
-        return this.id;
+const core_1 = require("@loopback/core");
+const loopback_datasource_juggler_1 = require("loopback-datasource-juggler");
+const post_1 = require("../models/post");
+let PostRepository = class PostRepository extends repository_1.DefaultCrudRepository {
+    constructor(datasource) {
+        super(post_1.Post, datasource);
+        this.datasource = datasource;
     }
 };
-__decorate([
-    repository_1.property({
-        type: 'number',
-        id: true
-    }),
-    __metadata("design:type", Number)
-], Post.prototype, "id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Post.prototype, "charity_id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-    }),
-    __metadata("design:type", Number)
-], Post.prototype, "user_id", void 0);
-Post = __decorate([
-    repository_1.model({
-        name: "post"
-    })
-], Post);
-exports.Post = Post;
-//# sourceMappingURL=post.js.map
+PostRepository = __decorate([
+    __param(0, core_1.inject('datasources.db')),
+    __metadata("design:paramtypes", [loopback_datasource_juggler_1.DataSource])
+], PostRepository);
+exports.PostRepository = PostRepository;
+//# sourceMappingURL=post.repository.js.map

@@ -3,12 +3,14 @@ import { UserRepository } from "../repositories/user.repository";
 import { post, get, patch, del, requestBody, HttpErrors, param } from "@loopback/rest";
 import { User } from "../models/user";
 import { Login } from "../models/login";
+import { Post } from "../models/post";
 import { PaymentMethod } from "../models/payment-methods";
 import { Donation } from "../models/donation";
 import { sign, verify } from'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import { CharityRepository } from "../repositories/charity.repository";
 import { DonationRepository } from "../repositories/donation.repository";
+import { PostRepository } from "../repositories/post.repository";
 
 import { Edit } from "../models/edit";
 
@@ -19,7 +21,8 @@ export class UserController {
   constructor(
     @repository(UserRepository.name) private userRepo: UserRepository,
     @repository(CharityRepository.name) private charityRepo: CharityRepository,
-    @repository(DonationRepository.name) private donationRepo: DonationRepository
+    @repository(DonationRepository.name) private donationRepo: DonationRepository,
+    @repository(PostRepository.name) private postRepo: PostRepository
   ) {}
 
   @post('/users')
@@ -223,6 +226,19 @@ export class UserController {
     donationToStore.date = donation.date;
 
     this.donationRepo.create(donationToStore);
+
+  }
+
+  @post('/favorite')
+  async favorite(@requestBody() post: Post) {
+    console.log(post.charity_id);
+    console.log(post.user_id);
+    //console.log(donation.donate_date);
+    var postToStore = new Post();
+    postToStore.charity_id = post.charity_id;
+    postToStore.user_id = post.user_id;
+
+    this.postRepo.create(postToStore);
 
   }
 

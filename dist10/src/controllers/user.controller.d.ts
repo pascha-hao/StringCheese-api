@@ -1,15 +1,18 @@
 import { UserRepository } from "../repositories/user.repository";
 import { User } from "../models/user";
 import { Login } from "../models/login";
+import { Post } from "../models/post";
 import { PaymentMethod } from "../models/payment-methods";
 import { Donation } from "../models/donation";
 import { CharityRepository } from "../repositories/charity.repository";
 import { DonationRepository } from "../repositories/donation.repository";
+import { PostRepository } from "../repositories/post.repository";
 export declare class UserController {
     private userRepo;
     private charityRepo;
     private donationRepo;
-    constructor(userRepo: UserRepository, charityRepo: CharityRepository, donationRepo: DonationRepository);
+    private postRepo;
+    constructor(userRepo: UserRepository, charityRepo: CharityRepository, donationRepo: DonationRepository, postRepo: PostRepository);
     register(user: User): Promise<User>;
     getAllUsers(): Promise<Array<User>>;
     login(login: Login): Promise<any>;
@@ -24,6 +27,7 @@ export declare class UserController {
     }>;
     createDonation(donation: Donation): Promise<void>;
     subscribe(donation: Donation): Promise<void>;
+    favorite(post: Post): Promise<void>;
     payment(pay: PaymentMethod): Promise<void>;
     loginWithQuery(login: Login): Promise<User>;
     updateUserById(id: number, user: User): Promise<boolean>;

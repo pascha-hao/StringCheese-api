@@ -27,20 +27,14 @@ __decorate([
         type: 'string',
         required: true
     }),
-    __metadata("design:type", String)
-], Post.prototype, "name", void 0);
+    __metadata("design:type", Number)
+], Post.prototype, "charity_id", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
     }),
-    __metadata("design:type", String)
-], Post.prototype, "description", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-    }),
-    __metadata("design:type", String)
-], Post.prototype, "postimg", void 0);
+    __metadata("design:type", Number)
+], Post.prototype, "user_id", void 0);
 Post = __decorate([
     repository_1.model({
         name: "post"

@@ -14,19 +14,13 @@ export class Post extends Entity {
     type: 'string',
     required: true
   })
-  name: string;
+  charity_id: number;
 
   @property({
     type: 'string',
     //required: true
   })
-  description: string;
-
-  @property({
-    type: 'string',
-    //required: true
-  })
-  postimg: string;
+  user_id: number;
 
   getId() {
     return this.id;

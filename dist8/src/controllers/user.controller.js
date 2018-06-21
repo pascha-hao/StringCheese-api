@@ -17,17 +17,20 @@ const user_repository_1 = require("../repositories/user.repository");
 const rest_1 = require("@loopback/rest");
 const user_1 = require("../models/user");
 const login_1 = require("../models/login");
+const post_1 = require("../models/post");
 const payment_methods_1 = require("../models/payment-methods");
 const donation_1 = require("../models/donation");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const charity_repository_1 = require("../repositories/charity.repository");
 const donation_repository_1 = require("../repositories/donation.repository");
+const post_repository_1 = require("../repositories/post.repository");
 let UserController = class UserController {
-    constructor(userRepo, charityRepo, donationRepo) {
+    constructor(userRepo, charityRepo, donationRepo, postRepo) {
         this.userRepo = userRepo;
         this.charityRepo = charityRepo;
         this.donationRepo = donationRepo;
+        this.postRepo = postRepo;
     }
     async register(user) {
         return await this.userRepo.create(user);
@@ -173,6 +176,15 @@ let UserController = class UserController {
         donationToStore.date = donation.date;
         this.donationRepo.create(donationToStore);
     }
+    async favorite(post) {
+        console.log(post.charity_id);
+        console.log(post.user_id);
+        //console.log(donation.donate_date);
+        var postToStore = new post_1.Post();
+        postToStore.charity_id = post.charity_id;
+        postToStore.user_id = post.user_id;
+        this.postRepo.create(postToStore);
+    }
     async payment(pay) {
         // Check that credit card info is supplied
         if (!pay.ccnum || !pay.exp || !pay.cvc || !pay.userID) {
@@ -283,6 +295,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "subscribe", null);
 __decorate([
+    rest_1.post('/favorite'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [post_1.Post]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "favorite", null);
+__decorate([
     rest_1.post('/payment-methods'),
     __param(0, rest_1.requestBody()),
     __metadata("design:type", Function),
@@ -315,9 +334,11 @@ UserController = __decorate([
     __param(0, repository_1.repository(user_repository_1.UserRepository.name)),
     __param(1, repository_1.repository(charity_repository_1.CharityRepository.name)),
     __param(2, repository_1.repository(donation_repository_1.DonationRepository.name)),
+    __param(3, repository_1.repository(post_repository_1.PostRepository.name)),
     __metadata("design:paramtypes", [user_repository_1.UserRepository,
         charity_repository_1.CharityRepository,
-        donation_repository_1.DonationRepository])
+        donation_repository_1.DonationRepository,
+        post_repository_1.PostRepository])
 ], UserController);
 exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map
