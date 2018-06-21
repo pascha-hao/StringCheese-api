@@ -264,6 +264,15 @@ export class UserController {
     return await this.postRepo.delete(tempPost[0]);
   }
 
+  @post('/favorites')
+  async favorites(
+    @requestBody() unfav: Unfav) {
+    var tempPost = await this.postRepo.find({where: {and: [{user_id: unfav.user_id}, {charity_id: unfav.charity_id}]}});
+    var exists = (tempPost.length ==0);
+    return await (tempPost);
+  }
+
+
 
 
   @post('/payment-methods')

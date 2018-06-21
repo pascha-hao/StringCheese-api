@@ -203,6 +203,11 @@ let UserController = class UserController {
             throw new rest_1.HttpErrors.Unauthorized('favorite not found');
         return await this.postRepo.delete(tempPost[0]);
     }
+    async favorites(unfav) {
+        var tempPost = await this.postRepo.find({ where: { and: [{ user_id: unfav.user_id }, { charity_id: unfav.charity_id }] } });
+        var exists = (tempPost.length == 0);
+        return await (tempPost);
+    }
     async payment(pay) {
         // Check that credit card info is supplied
         if (!pay.ccnum || !pay.exp || !pay.cvc || !pay.userID) {
@@ -326,6 +331,13 @@ __decorate([
     __metadata("design:paramtypes", [unfav_1.Unfav]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "unfavorite", null);
+__decorate([
+    rest_1.post('/favorites'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [unfav_1.Unfav]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "favorites", null);
 __decorate([
     rest_1.post('/payment-methods'),
     __param(0, rest_1.requestBody()),
