@@ -159,28 +159,36 @@ export class UserController {
   }
 
   @post('/edit')
-  async editUser(@requestBody() edit: Edit) {
+  async editUser(
+    @requestBody() edit: Partial<User>,
+    @param.query.string('jwt') jwt: string) {
+    
+    let userId = null;
 
-    var editToStore = new Edit();
-    editToStore.firstname = edit.firstname;
-    editToStore.email = edit.email;
+    try {
+      userId = (verify(jwt, 'shh') as any).user.id;
+    } catch {
+      throw new HttpErrors.Unauthorized("Invalid JWT.");
+    }
 
-    let storedEdit = await this.userRepo.create(editToStore);
+    
 
-    var jwt = sign(
-      {
-        edit: storedEdit,
-      },
-      'shh',
-      {
-        issuer: 'auth.ix.co.za',
-        audience: 'ix.co.za',
-      },
-    );
+    return this.userRepo.updateById(userId, edit);
 
-    return {
-      token: jwt,
-    };
+    // var jwt = sign(
+    //   {
+    //     edit: storedEdit,
+    //   },
+    //   'shh',
+    //   {
+    //     issuer: 'auth.ix.co.za',
+    //     audience: 'ix.co.za',
+    //   },
+    // );
+
+    // return {
+    //   token: jwt,
+    // };
   }
 
   @post('/donation')
