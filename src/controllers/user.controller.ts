@@ -193,6 +193,22 @@ export class UserController {
     donationToStore.user_id = donation.user_id;
     donationToStore.amount = donation.amount;
     donationToStore.charity_name = donation.charity_name;
+    donationToStore.is_subscription = false;
+
+    this.donationRepo.create(donationToStore);
+
+  }
+
+  @post('/subscribe')
+  async subscribe(@requestBody() donation: Donation) {
+    //console.log(donation.is_subscription);
+    //console.log(donation.donate_date);
+    var donationToStore = new Donation();
+    donationToStore.charity_id = donation.charity_id;
+    donationToStore.user_id = donation.user_id;
+    donationToStore.amount = donation.amount;
+    donationToStore.charity_name = donation.charity_name;
+    donationToStore.is_subscription = true;
 
     this.donationRepo.create(donationToStore);
 

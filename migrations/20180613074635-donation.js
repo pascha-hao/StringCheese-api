@@ -32,6 +32,9 @@ exports.up = function(db, callback) {
     },
     amount: {
       type: 'int'
+    },
+    is_subscription: {
+      type: 'boolean'
     }
   }, callback);
   

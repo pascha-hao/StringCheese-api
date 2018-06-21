@@ -35,6 +35,12 @@ import {Entity, property, model} from '@loopback/repository';
     })
     amount: number;
 
+    @property({
+        type: 'boolean',
+        required: true
+    })
+    is_subscription: boolean;
+
     //  @property({
     //      type: 'string',
     //      required: true
