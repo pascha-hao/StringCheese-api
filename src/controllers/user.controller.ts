@@ -257,10 +257,15 @@ export class UserController {
     @param.query.string('user_id') user_id: string,
     @param.query.string('charity_id') charity_id: string) {
     var tempPost = await this.postRepo.find({where: {and: [{user_id: user_id}, {charity_id: charity_id}]}});
-    var exists = (tempPost.length ==0);
     return await (tempPost);
   }
 
+  @get('/myfavorites')
+  async myfavorites(
+    @param.query.string('user_id') user_id: string) {
+    var tempPost = await this.postRepo.find({where: {user_id: user_id}});
+    return await (tempPost);
+  }
 
 
 

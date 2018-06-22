@@ -194,7 +194,10 @@ let UserController = class UserController {
     }
     async favorites(user_id, charity_id) {
         var tempPost = await this.postRepo.find({ where: { and: [{ user_id: user_id }, { charity_id: charity_id }] } });
-        var exists = (tempPost.length == 0);
+        return await (tempPost);
+    }
+    async myfavorites(user_id) {
+        var tempPost = await this.postRepo.find({ where: { user_id: user_id } });
         return await (tempPost);
     }
     async payment(pay) {
@@ -328,6 +331,13 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "favorites", null);
+__decorate([
+    rest_1.get('/myfavorites'),
+    __param(0, rest_1.param.query.string('user_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "myfavorites", null);
 __decorate([
     rest_1.post('/payment-methods'),
     __param(0, rest_1.requestBody()),

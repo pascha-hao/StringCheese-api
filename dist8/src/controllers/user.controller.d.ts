@@ -31,6 +31,7 @@ export declare class UserController {
     favorite(post: Post): Promise<void>;
     unfavorite(unfav: Unfav): Promise<boolean>;
     favorites(user_id: string, charity_id: string): Promise<Post[]>;
+    myfavorites(user_id: string): Promise<Post[]>;
     payment(pay: PaymentMethod): Promise<void>;
     loginWithQuery(login: Login): Promise<User>;
     updateUserById(id: number, user: User): Promise<boolean>;
